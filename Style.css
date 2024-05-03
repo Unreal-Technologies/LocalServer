@@ -1,0 +1,127 @@
+html, body
+{
+    background-color: #303030;
+    margin: 0px;
+    padding: 0px;
+    font-family: monospace;
+    color: white;
+}
+
+div
+{
+    float: left;
+}
+
+#menu, #frame
+{
+    width: 200px;
+    height: 100%;
+}
+
+#menu
+{
+    margin: 5px;
+    height: calc(100% - 10px);
+    
+}
+
+#menu a
+{
+    color: white;
+    width: 190px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: gray;
+    border-width: 1px;
+    height: 20px;
+    vertical-align: middle;
+    line-height: 20px;
+    margin-bottom: 5px;
+}
+
+#menu a:hover
+{
+    color: lightblue;
+    background-color: #606060;
+}
+
+#frame
+{
+    width: calc(100% - 210px);
+    height: 100%;
+}
+
+#frame iframe
+{
+    width: 100%;
+    height: 100%;
+    border-width: 0px;
+}
+
+#copyright
+{
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+}
+
+#version
+{
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+
+table, tr, td, th
+{
+    border-width: 0px;
+    margin: 0px;
+    padding: 0px;
+    border-spacing: 0px;
+}
+
+#DirectoryRender
+{
+    margin: 5px;
+}
+
+#DirectoryRender a, #DirectoryRender .header
+{
+    color: white;
+    padding-left: 5px;
+    text-decoration: none;
+}
+
+#DirectoryRender a:hover
+{
+    color: lightblue;
+}
+
+#DirectoryRender .header
+{
+    font-style: italic;
+}
+
+#DirectoryRender .down, #DirectoryRender .down-right, #DirectoryRender .right
+{
+    width: 32px;
+    height: 32px;
+}
+
+#DirectoryRender .down
+{
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAABYlAAAWJQFJUiTwAAAAN0lEQVR42u3OsQ0AIAwDQSv7T8sCAVaAIs1Z+tLSVa/kubuf/6kyPAAAAAAAAAAAAAAAAAAAgA0rrEBsH4+MZAAAAABJRU5ErkJggg");
+}
+
+#DirectoryRender .down-right
+{
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiUAABYlAUlSJPAAAABASURBVFhH7daxEQAgCARBtP+e1YAKwBkD95In3JDotE55lpu5zwIAAAAAAAAYuaVu/AOtPCQ3AgAAAAD4HRCxAYYXDDA46GlGAAAAAElFTkSuQmCC");
+}
+
+#DirectoryRender .right
+{
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAABYlAAAWJQFJUiTwAAAARUlEQVR42u3RwQkAIAwEwSR/++9TC7hoC95DkD3YZ2AgpRlx3Zlzv6t4PAAAAAAAAACADxiSkwdYmW4fvAAAAAAAAAAw11pucWHSb5gnAAAAAElFTkSuQmCC");
+}
