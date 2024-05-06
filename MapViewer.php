@@ -5,13 +5,13 @@ require_once 'MapView/.init';
 $ini = parse_ini_file('MapView.ini', true);
 ini_set('memory_limit', '2G');
 
-$generatedWorlds = UT_Php\IO\Directory::FromString($ini['MapView']['GeneratedWorlds']);
-$steamCommon = UT_Php\IO\Directory::FromString($ini['MapView']['SteamCommon']);
-$root = UT_Php\IO\Directory::FromString(__DIR__);
+$generatedWorlds = UT_Php\IO\Directory::fromString($ini['MapView']['GeneratedWorlds']);
+$steamCommon = UT_Php\IO\Directory::fromString($ini['MapView']['SteamCommon']);
+$root = UT_Php\IO\Directory::fromString(__DIR__);
 
 $selected = count($_GET) === 0 || !isset($_GET['selected']) ? null : $_GET['selected'];
 
-if($selected == null) {
+if ($selected == null) {
     $s = microtime(true);
     $listing = new MapView\MapView($generatedWorlds, $steamCommon, $root);
     $stream = (string)$listing;

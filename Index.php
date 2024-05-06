@@ -2,8 +2,11 @@
 require_once 'UT.php/.init';
 
 const APP_VERSION = new \UT_Php\Version(
-    1, 0, 0, 0, [
-    'UT.Php' => UT_PHP_VERSION]
+    1,
+    0,
+    0,
+    0,
+    ['UT.Php' => UT_PHP_VERSION]
 );
 
 ?>

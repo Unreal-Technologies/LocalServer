@@ -42,18 +42,18 @@ $collection = [
 
 $lowId = 2;
 
-$query = (new \UT_Php\Collections\Linq($collection)) 
-    -> Where(
-        function ($x) use ($lowId) { 
-            return $x['Id'] > $lowId; 
+$query = (new \UT_Php\Collections\Linq($collection))
+    -> where(
+        function ($x) use ($lowId) {
+            return $x['Id'] > $lowId;
         }
     )
-    -> Where(
+    -> where(
         function ($x) {
-            return $x['Id'] < 10; 
+            return $x['Id'] < 10;
         }
     )
-    -> Select(
+    -> select(
         function ($x) {
             return [
             'Id' => $x['Id'],
@@ -62,25 +62,25 @@ $query = (new \UT_Php\Collections\Linq($collection))
             ];
         }
     )
-    -> OrderBy(null, UT_Php\Enums\SortDirections::Desc)
-    -> GroupBy(
+    -> orderBy(null, UT_Php\Enums\SortDirections::Desc)
+    -> groupBy(
         function ($x) {
-            return $x['TypeId']; 
+            return $x['TypeId'];
         }
     )
-    -> Avg(
+    -> avg(
         function ($x) {
-            return $x['Value']; 
+            return $x['Value'];
         }
     )
-    -> Where(
+    -> where(
         function ($x) {
-            return $x > 250; 
+            return $x > 250;
         }
     );
-$result1 = $query -> ToArray();
-$result2 = $query -> FirstOrDefault();
-$result3 = $query -> Count();
+$result1 = $query -> toArray();
+$result2 = $query -> firstOrDefault();
+$result3 = $query -> count();
 
 echo '<xmp>';
 print_r($query);

@@ -6,217 +6,213 @@ class World
     /**
      * @var string
      */
-    private $_name;
+    private $name_;
     
     /**
      * @var int[]
      */
-    private $_size;
+    private $size_;
     
     /**
      * @var array
      */
-    private $_version;
+    private $version_;
     
     /**
      * @var int
      */
-    private $_scale;
+    private $scale_;
     
     /**
      * @var array
      */
-    private $_spawnPoints = [];
+    private $spawnPoints_ = [];
     
     /**
      * @var array
      */
-    private $_prefabs = [];
+    private $prefabs_ = [];
     
-    /** 
+    /**
      * @var \Data\IO\File
      */
-    private $_biomes;
+    private $biomes_;
     
-    /** 
+    /**
      * @var \Data\IO\File|null
      */
-    private $_render;
+    private $render_;
     
     /**
      * @return \UT_Php\IO\File
      */
-    public function Visuals(): \UT_Php\IO\File
+    public function visuals(): \UT_Php\IO\File
     {
-        $f = $this -> _render === null || !$this -> _render -> Exists() ? $this -> _biomes : $this -> _render;
-        $images = \UT_Php\IO\Directory::FromString('Images');
-        if(!$images -> Exists()) {
-            $images -> Create();
+        $f = $this -> render_ === null || !$this -> render_ -> exists() ? $this -> biomes_ : $this -> render_;
+        $images = \UT_Php\IO\Directory::fromString('Images');
+        if (!$images -> exists()) {
+            $images -> create();
         }
         
-        $name = md5($this -> _name).'.'.$f -> Extension();
-        $f -> CopyTo($images, $name);
-        return \UT_Php\IO\File::FromDirectory($images, $name);
+        $name = md5($this -> name_).'.'.$f -> extension();
+        $f -> copyTo($images, $name);
+        return \UT_Php\IO\File::fromDirectory($images, $name);
     }
     
     /**
      * @return \UT_Php\IO\File|null
      */
-    public function Render(): ?\UT_Php\IO\File
+    public function render(): ?\UT_Php\IO\File
     {
-        return $this -> _render;
+        return $this -> render_;
     }
     
     /**
      * @return string
      */
-    public function Name(): string
+    public function name(): string
     {
-        return $this -> _name;
+        return $this -> name_;
     }
     
     /**
      * @return \Data\Drawing\Point2D
      */
-    public function Size(): \Data\Drawing\Point2D
+    public function size(): \Data\Drawing\Point2D
     {
-        return new \Data\Drawing\Point2D($this -> _size[0], $this -> _size[1]);
+        return new \Data\Drawing\Point2D($this -> size_[0], $this -> size_[1]);
     }
     
-    /** 
+    /**
      * @return array
      */
-    public function Version(): array
+    public function version(): array
     {
-        return $this -> _version;
+        return $this -> version_;
     }
     
-    /** 
+    /**
      * @return int
      */
-    public function Scale(): int
+    public function scale(): int
     {
-        return $this -> _scale;
+        return $this -> scale_;
     }
     
     /**
      * @return array
      */
-    public function SpawnPoints(): array
+    public function spawnPoints(): array
     {
-        return $this -> _spawnPoints;
+        return $this -> spawnPoints_;
     }
     
     /**
      * @return array
      */
-    public function Prefabs(): array
+    public function prefabs(): array
     {
-        return $this -> _prefabs;
+        return $this -> prefabs_;
     }
     
     /**
      * @return \UT_Php\IO\File
      */
-    public function Biomes(): \UT_Php\IO\File
+    public function biomes(): \UT_Php\IO\File
     {
-        return $this -> _biomes;
+        return $this -> biomes_;
     }
     
     /**
      * @param \UT_Php\IO\Directory $world
      */
-    public function __construct(\UT_Php\IO\Directory $world) 
+    public function __construct(\UT_Php\IO\Directory $world)
     {
-        $this -> _name = $world -> Name();
+        $this -> name_ = $world -> name();
         
-        $biomes = \UT_Php\IO\File::FromDirectory($world, 'biomes.png');
-        $render = \UT_Php\IO\File::FromDirectory($world, 'render.png');
-        $mapView = \UT_Php\IO\File::FromDirectory($world, 'MapView.World.bin');
-        $create = $mapView -> Exists() ? false : true;
+        $biomes = \UT_Php\IO\File::fromDirectory($world, 'biomes.png');
+        $render = \UT_Php\IO\File::fromDirectory($world, 'render.png');
+        $mapView = \UT_Php\IO\File::fromDirectory($world, 'MapView.World.bin');
+        $create = $mapView -> exists() ? false : true;
         
-        if($create) {
-            $mapInfo = \UT_Php\IO\File::FromDirectory($world, 'map_info.xml');
-            $prefabs = \UT_Php\IO\File::FromDirectory($world, 'prefabs.xml');
-            $spawnpoints = \UT_Php\IO\File::FromDirectory($world, 'spawnpoints.xml');
+        if ($create) {
+            $mapInfo = \UT_Php\IO\File::fromDirectory($world, 'map_info.xml');
+            $prefabs = \UT_Php\IO\File::fromDirectory($world, 'prefabs.xml');
+            $spawnpoints = \UT_Php\IO\File::fromDirectory($world, 'spawnpoints.xml');
 
-            $this -> GetMapInfo($mapInfo);
-            $this -> GetSpawnPoints($spawnpoints);
-            $this -> GetPrefabs($prefabs);
+            $this -> getMapInfo($mapInfo);
+            $this -> getSpawnPoints($spawnpoints);
+            $this -> getPrefabs($prefabs);
             
-            $this -> SaveMapView($mapView);
+            $this -> saveMapView($mapView);
+        } else {
+            $this -> loadMapView($mapView);
         }
-        else
-        {
-            $this -> LoadMapView($mapView);
-        }
-        $this -> _biomes = $biomes;
-        $this -> _render = $render;
+        $this -> biomes_ = $biomes;
+        $this -> render_ = $render;
     }
     
     /**
      * @param  \UT_Php\IO\File $file
      * @return void
      */
-    private function LoadMapView(\UT_Php\IO\File $file): void
+    private function loadMapView(\UT_Php\IO\File $file): void
     {
-        $data = (array)json_decode(gzuncompress(file_get_contents($file -> Path())));
+        $data = (array)json_decode(gzuncompress(file_get_contents($file -> path())));
         
-        $this -> _size = $data['Size'];
-        $this -> _version = (array)$data['Version'];
-        $this -> _scale = $data['Scale'];
-        $this -> _spawnPoints = $data['SpawnPoints'];
+        $this -> size_ = $data['Size'];
+        $this -> version_ = (array)$data['Version'];
+        $this -> scale_ = $data['Scale'];
+        $this -> spawnPoints_ = $data['SpawnPoints'];
         
         $prefabs = [];
-        foreach((array)$data['Prefabs'] as $k => $v)
-        {
+        foreach ((array)$data['Prefabs'] as $k => $v) {
             $buffer = [];
-            foreach((array)$v as $i)
-            {
+            foreach ((array)$v as $i) {
                 $buffer[] = (array)$i;
             }
             $prefabs[$k] = $buffer;
         }
-        $this -> _prefabs = $prefabs;
+        $this -> prefabs_ = $prefabs;
     }
     
     /**
      * @param  \UT_Php\IO\File $file
      * @return void
      */
-    private function SaveMapView(\UT_Php\IO\File $file): void
+    private function saveMapView(\UT_Php\IO\File $file): void
     {
         $data = gzcompress(
             json_encode(
                 [
                 'Stamp' => date('U'),
-                'Size' => $this -> _size,
-                'Version' => $this -> _version,
-                'Scale' => $this -> _scale,
-                'SpawnPoints' => $this -> _spawnPoints,
-                'Prefabs' => $this -> _prefabs
+                'Size' => $this -> size_,
+                'Version' => $this -> version_,
+                'Scale' => $this -> scale_,
+                'SpawnPoints' => $this -> spawnPoints_,
+                'Prefabs' => $this -> prefabs_
                 ]
-            ), 9
+            ),
+            9
         );
         
-        file_put_contents($file -> Path(), $data);
+        file_put_contents($file -> path(), $data);
     }
     
     /**
      * @param  \UT_Php\IO\File $prefabs
      * @return void
      */
-    private function GetPrefabs(\UT_Php\IO\File $prefabs): void
+    private function getPrefabs(\UT_Php\IO\File $prefabs): void
     {
-        $prefabsXml = \UT_Php\IO\Xml\Document::CreateFromXml(file_get_contents($prefabs -> Path()));
+        $prefabsXml = \UT_Php\IO\Xml\Document::createFromXml(file_get_contents($prefabs -> path()));
         
         $list = [];
-        foreach($prefabsXml -> Search('/^decoration$/i') as $element)
-        {
-            $attributes = $element -> Attributes();
+        foreach ($prefabsXml -> search('/^decoration$/i') as $element) {
+            $attributes = $element -> attributes();
             $name = $attributes['name'];
             
-            if(!isset($list[$name])) {
+            if (!isset($list[$name])) {
                 $list[$name] = [];
             }
             
@@ -229,53 +225,51 @@ class World
             ];
         }
         
-        $this -> _prefabs = $list;
+        $this -> prefabs_ = $list;
     }
     
-    /** 
+    /**
      * @param  \UT_Php\IO\File $spawnPoints
      * @return void
      */
-    private function GetSpawnPoints(\UT_Php\IO\File $spawnPoints): void
+    private function getSpawnPoints(\UT_Php\IO\File $spawnPoints): void
     {
-        $spawnPointsXml = \UT_Php\IO\Xml\Document::CreateFromXml(file_get_contents($spawnPoints -> Path()));
+        $spawnPointsXml = \UT_Php\IO\Xml\Document::createFromXml(file_get_contents($spawnPoints -> path()));
         
         $list = [];
-        foreach($spawnPointsXml -> Search('/^spawnpoint$/i') as $element)
-        {
-            $attributes = $element -> Attributes();
+        foreach ($spawnPointsXml -> search('/^spawnpoint$/i') as $element) {
+            $attributes = $element -> attributes();
             list($lx, $ly, $lz) = explode(',', $attributes['position']);
 
             $list[] = [$lx, $ly, $lz];
         }
         
-        $this -> _spawnPoints = $list;
+        $this -> spawnPoints_ = $list;
     }
     
     /**
      * @param  \UT_Php\IO\File $mapInfo
      * @return void
      */
-    private function GetMapInfo(\UT_Php\IO\File $mapInfo): void
+    private function getMapInfo(\UT_Php\IO\File $mapInfo): void
     {
-        $mapInfoXml = \UT_Php\IO\Xml\Document::CreateFromXml(file_get_contents($mapInfo -> Path()));
+        $mapInfoXml = \UT_Php\IO\Xml\Document::createFromXml(file_get_contents($mapInfo -> path()));
 
-        foreach($mapInfoXml -> Search('/^property$/i') as $element)
-        {
-            $attributes = $element -> Attributes();
+        foreach ($mapInfoXml -> search('/^property$/i') as $element) {
+            $attributes = $element -> attributes();
             
-            if($attributes['name'] === 'Scale') {
-                $this -> _scale = $attributes['value'];
+            if ($attributes['name'] === 'Scale') {
+                $this -> scale_ = $attributes['value'];
                 continue;
             }
-            if($attributes['name'] === 'HeightMapSize') {
+            if ($attributes['name'] === 'HeightMapSize') {
                 list($x, $y) = explode(',', $attributes['value']);
-                $this -> _size = [$x, $y];
+                $this -> size_ = [$x, $y];
                 continue;
             }
-            if($attributes['name'] === 'GameVersion') {
+            if ($attributes['name'] === 'GameVersion') {
                 list($t, $maj, $min, $bet) = explode('.', $attributes['value']);
-                $this -> _version = [
+                $this -> version_ = [
                     'Release' => $t,
                     'Major' => $maj,
                     'Minor' => $min,
