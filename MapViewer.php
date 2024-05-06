@@ -17,8 +17,8 @@ if ($selected == null) {
     $stream = (string)$listing;
     $e = microtime(true);
     $dif = ($e - $s) * 1000;
-    
-    $stream .= '<hr />'.number_format($dif, 0, ',', '.').' ms';
+
+    $stream .= '<hr />' . number_format($dif, 0, ',', '.') . ' ms';
     ?>
     <html>
         <head>
