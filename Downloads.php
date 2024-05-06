@@ -1,10 +1,10 @@
 <?php
 require_once 'UT.php/.init';
-$downloads = UT_Php\IO\Directory::FromString("Downloads");
-if(!$downloads -> Exists()) {
-    $downloads -> Create();
+$downloads = UT_Php\IO\Directory::fromString("Downloads");
+if (!$downloads -> exists()) {
+    $downloads -> create();
 }
-$root = UT_Php\IO\Directory::FromString('.');
+$root = UT_Php\IO\Directory::fromString('.');
 
 $tree = new UT_Php\Html\Directory($downloads, $root);
 ?>
