@@ -50,8 +50,7 @@ class World
     {
         $f = $this -> _render === null || !$this -> _render -> Exists() ? $this -> _biomes : $this -> _render;
         $images = \UT_Php\IO\Directory::FromString('Images');
-        if(!$images -> Exists())
-        {
+        if(!$images -> Exists()) {
             $images -> Create();
         }
         
@@ -136,8 +135,7 @@ class World
         $mapView = \UT_Php\IO\File::FromDirectory($world, 'MapView.World.bin');
         $create = $mapView -> Exists() ? false : true;
         
-        if($create)
-        {
+        if($create) {
             $mapInfo = \UT_Php\IO\File::FromDirectory($world, 'map_info.xml');
             $prefabs = \UT_Php\IO\File::FromDirectory($world, 'prefabs.xml');
             $spawnpoints = \UT_Php\IO\File::FromDirectory($world, 'spawnpoints.xml');
@@ -157,7 +155,7 @@ class World
     }
     
     /**
-     * @param \UT_Php\IO\File $file
+     * @param  \UT_Php\IO\File $file
      * @return void
      */
     private function LoadMapView(\UT_Php\IO\File $file): void
@@ -183,25 +181,29 @@ class World
     }
     
     /**
-     * @param \UT_Php\IO\File $file
+     * @param  \UT_Php\IO\File $file
      * @return void
      */
     private function SaveMapView(\UT_Php\IO\File $file): void
     {
-        $data = gzcompress(json_encode([
-            'Stamp' => date('U'),
-            'Size' => $this -> _size,
-            'Version' => $this -> _version,
-            'Scale' => $this -> _scale,
-            'SpawnPoints' => $this -> _spawnPoints,
-            'Prefabs' => $this -> _prefabs
-        ]),9);
+        $data = gzcompress(
+            json_encode(
+                [
+                'Stamp' => date('U'),
+                'Size' => $this -> _size,
+                'Version' => $this -> _version,
+                'Scale' => $this -> _scale,
+                'SpawnPoints' => $this -> _spawnPoints,
+                'Prefabs' => $this -> _prefabs
+                ]
+            ), 9
+        );
         
         file_put_contents($file -> Path(), $data);
     }
     
     /**
-     * @param \UT_Php\IO\File $prefabs
+     * @param  \UT_Php\IO\File $prefabs
      * @return void
      */
     private function GetPrefabs(\UT_Php\IO\File $prefabs): void
@@ -214,8 +216,7 @@ class World
             $attributes = $element -> Attributes();
             $name = $attributes['name'];
             
-            if(!isset($list[$name]))
-            {
+            if(!isset($list[$name])) {
                 $list[$name] = [];
             }
             
@@ -232,7 +233,7 @@ class World
     }
     
     /** 
-     * @param \UT_Php\IO\File $spawnPoints
+     * @param  \UT_Php\IO\File $spawnPoints
      * @return void
      */
     private function GetSpawnPoints(\UT_Php\IO\File $spawnPoints): void
@@ -252,7 +253,7 @@ class World
     }
     
     /**
-     * @param \UT_Php\IO\File $mapInfo
+     * @param  \UT_Php\IO\File $mapInfo
      * @return void
      */
     private function GetMapInfo(\UT_Php\IO\File $mapInfo): void
@@ -263,19 +264,16 @@ class World
         {
             $attributes = $element -> Attributes();
             
-            if($attributes['name'] === 'Scale')
-            {
+            if($attributes['name'] === 'Scale') {
                 $this -> _scale = $attributes['value'];
                 continue;
             }
-            if($attributes['name'] === 'HeightMapSize')
-            {
+            if($attributes['name'] === 'HeightMapSize') {
                 list($x, $y) = explode(',', $attributes['value']);
                 $this -> _size = [$x, $y];
                 continue;
             }
-            if($attributes['name'] === 'GameVersion')
-            {
+            if($attributes['name'] === 'GameVersion') {
                 list($t, $maj, $min, $bet) = explode('.', $attributes['value']);
                 $this -> _version = [
                     'Release' => $t,

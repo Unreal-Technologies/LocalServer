@@ -64,10 +64,8 @@ class SevenDaysToDieApp
         $mapView = \UT_Php\IO\File::FromDirectory($app, 'MapView.Game.bin');
         $create = $mapView -> Exists() ? false : true;
 
-        if($create)
-        {
-            if(!$app -> Exists())
-            {
+        if($create) {
+            if(!$app -> Exists()) {
                 return; 
             }
             
@@ -75,40 +73,34 @@ class SevenDaysToDieApp
             $log = null;
 
             $checkAltLog = false;
-            if($bepInEx === null || !$bepInEx -> Exists())
-            {
+            if($bepInEx === null || !$bepInEx -> Exists()) {
                 $checkAltLog = true;
             }
             else 
             {
                 $log = \UT_Php\IO\File::FromDirectory($bepInEx, 'LogOutput.log');
-                if($log === null)
-                {
+                if($log === null) {
                     $checkAltLog = true;
                 }
             }
             
-            if($checkAltLog)
-            {
+            if($checkAltLog) {
                 $data = \UT_Php\IO\Directory::FromDirectory($app, '7DaysToDie_Data');
-                if($data === null || !$data -> Exists())
-                {
+                if($data === null || !$data -> Exists()) {
                     $data = \UT_Php\IO\Directory::FromDirectory($app, '7DaysToDieServer_Data');
                 }
 
                 $list = $data -> List('/^output\_log\_dedi/i');
                 
-                if(count($list) == 0)
-                {
-                   $localLow = \UT_Php\IO\Directory::FromString('C:\\Users\\Peter\\AppData\\LocalLow\\The Fun Pimps\\7 Days To Die');
-                   $list = $localLow -> List('/^Player.log$/i');
+                if(count($list) == 0) {
+                    $localLow = \UT_Php\IO\Directory::FromString('C:\\Users\\Peter\\AppData\\LocalLow\\The Fun Pimps\\7 Days To Die');
+                    $list = $localLow -> List('/^Player.log$/i');
                 }
                 
                 $log = count($list) === 0 ? null : $list[count($list) - 1];
             }
             
-            if($log === null)
-            {
+            if($log === null) {
                 return;
             }
             $this -> _isValid = true;
@@ -126,7 +118,7 @@ class SevenDaysToDieApp
     }
     
     /**
-     * @param \UT_Php\IO\File $file
+     * @param  \UT_Php\IO\File $file
      * @return void
      */
     private function LoadMapView(\UT_Php\IO\File $file): void
@@ -138,22 +130,24 @@ class SevenDaysToDieApp
     }
     
     /**
-     * @param \UT_Php\IO\File $file
+     * @param  \UT_Php\IO\File $file
      * @return void
      */
     private function SaveMapView(\UT_Php\IO\File $file): void
     {
-        $data = json_encode([
+        $data = json_encode(
+            [
             'Stamp' => date('U'),
             'Version' => $this -> _version,
             'Prefabs' => $this -> _prefabs
-        ]);
+            ]
+        );
         
         file_put_contents($file -> Path(), gzcompress($data, 9));
     }
     
     /**
-     * @param \UT_Php\IO\Directory $app
+     * @param  \UT_Php\IO\Directory $app
      * @return void
      */
     private function GetPrefabs(\UT_Php\IO\Directory $app): void
@@ -164,15 +158,13 @@ class SevenDaysToDieApp
         $folders = [ $default ];
         foreach($mods -> List() as $iDiskManager)
         {
-            if(!($iDiskManager instanceof \UT_Php\IO\Directory))
-            {
+            if(!($iDiskManager instanceof \UT_Php\IO\Directory)) {
                 continue;
             }
             
             $modPrefabs = \UT_Php\IO\Directory::FromDirectory($iDiskManager, 'Prefabs');
             
-            if($modPrefabs -> Exists())
-            {
+            if($modPrefabs -> Exists()) {
                 $folders[] = $modPrefabs;
             }
         }
@@ -188,7 +180,7 @@ class SevenDaysToDieApp
     }
     
     /**
-     * @param \UT_Php\IO\Directory $dir
+     * @param  \UT_Php\IO\Directory $dir
      * @return string[]
      */
     private function GetPrefabs_Listing(\UT_Php\IO\Directory $dir): array
@@ -196,13 +188,11 @@ class SevenDaysToDieApp
         $buffer = [];
         foreach($dir -> List() as $iDiskManager)
         {
-            if($iDiskManager instanceof \UT_Php\IO\Directory)
-            {
+            if($iDiskManager instanceof \UT_Php\IO\Directory) {
                 $list = $this -> GetPrefabs_Listing($iDiskManager);
                 $buffer = array_merge($buffer, $list);
             }
-            else if($iDiskManager instanceof \UT_Php\IO\File && $iDiskManager -> Extension() === 'tts')
-            {
+            else if($iDiskManager instanceof \UT_Php\IO\File && $iDiskManager -> Extension() === 'tts') {
                 $prefab = \UT_Php\IO\File::FromDirectory($iDiskManager -> Parent(), $iDiskManager -> Basename().'.xml');
                 $prefabXml = \UT_Php\IO\Xml\Document::CreateFromXml(file_get_contents($prefab -> Path()));
                 
@@ -210,8 +200,7 @@ class SevenDaysToDieApp
                 foreach($prefabXml -> Search('/^property$/i') as $element)
                 {
                     $attributes = $element -> Attributes();
-                    if(isset($attributes['name']) && $attributes['name'] === 'PrefabSize')
-                    {
+                    if(isset($attributes['name']) && $attributes['name'] === 'PrefabSize') {
                         list($x, $y, $z) = explode(', ', $attributes['value']);
                         $buffer[$iDiskManager -> Basename()] = [
                             'X' => $x, 
@@ -223,8 +212,7 @@ class SevenDaysToDieApp
                     }
                 }
                 
-                if(!$hasSize)
-                {
+                if(!$hasSize) {
                     $buffer[$iDiskManager -> Basename()] = null;
                 }
             }
@@ -235,7 +223,7 @@ class SevenDaysToDieApp
     }
     
     /**
-     * @param \UT_Php\IO\File $log
+     * @param  \UT_Php\IO\File $log
      * @return void
      */
     private function GetVersion(\UT_Php\IO\File $log, bool $isAlternativeLog): void
@@ -243,8 +231,7 @@ class SevenDaysToDieApp
         $stream = file_get_contents($log -> Path());
         
         $regex = '/^\[Info( )*\:( )*Console\] [0-9]{4}\-[0-9]{2}\-[0-9]{2}T[0-9]{2}\:[0-9]{2}\:[0-9]{2} [0-9\.]{5} INF Version.*$/msiU';
-        if($isAlternativeLog)
-        {
+        if($isAlternativeLog) {
             $regex = '/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}T[0-9]{2}\:[0-9]{2}\:[0-9]{2} [0-9\.]{5} INF Version.*$/msiU';
         }
         

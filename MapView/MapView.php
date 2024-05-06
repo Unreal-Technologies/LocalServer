@@ -33,18 +33,15 @@ class MapView
         $this -> _root = $root;
         foreach($generatedWorlds -> List() as $world)
         {
-            if($world instanceof \UT_Php\IO\Directory && $world -> Contains('/^biomes.png$/i') && $world -> Contains('/^map_info.xml$/i'))
-            {
+            if($world instanceof \UT_Php\IO\Directory && $world -> Contains('/^biomes.png$/i') && $world -> Contains('/^map_info.xml$/i')) {
                 $this -> _worlds[] = new World($world);
             }
         }
         foreach($steamCommon -> List() as $app)
         {
-            if($app instanceof \UT_Php\IO\Directory && ($app -> Contains('/^7DaysToDie.exe$/i') || $app -> Contains('/^7DaysToDieServer.exe$/i')))
-            {
+            if($app instanceof \UT_Php\IO\Directory && ($app -> Contains('/^7DaysToDie.exe$/i') || $app -> Contains('/^7DaysToDieServer.exe$/i'))) {
                 $sdtdApp = new SevenDaysToDieApp($app);
-                if($sdtdApp -> IsValid())
-                {
+                if($sdtdApp -> IsValid()) {
                     $this -> _clients[] = $sdtdApp;
                 }
             }
@@ -70,8 +67,7 @@ class MapView
                 $key = $wi.'.'.$ci;
                 $buffer[$key] = $isCompatable;
                 
-                if($createRender && $isCompatable)
-                {
+                if($createRender && $isCompatable) {
                     $image = \UT_Php\Drawing\Image::GetImage($world -> Biomes());
                     $fc = \UT_Php\Drawing\Color::FromRGB(192, 192, 192);
                     $bc = \UT_Php\Drawing\Color::FromRGB(0, 0, 0);
@@ -79,32 +75,27 @@ class MapView
                     $fcSettlement = \UT_Php\Drawing\Color::FromRGB(192, 0, 0);
                     $wpc = \UT_Php\Drawing\Color::FromRGB(0, 0, 192);
                     
-                    if($image -> GD_Open())
-                    {
+                    if($image -> GD_Open()) {
                         $half = $image -> Size() -> X() / 2;
                         foreach($world -> Prefabs() as $key => $prefab)
                         {
                             foreach($prefab as $locationData)
                             {
-                                if($locationData === null)
-                                {
+                                if($locationData === null) {
                                     continue;
                                 }
                                 
                                 $prefabGame = (array)$client -> Prefabs()[$key];
-                                if(!isset($prefabGame['X']))
-                                {
+                                if(!isset($prefabGame['X'])) {
                                     continue;
                                 }
                                 
                                 $foregroundColor = $fc;
                                 $borderColor = $bc;
-                                if(preg_match('/^trader_/i', $key))
-                                {
+                                if(preg_match('/^trader_/i', $key)) {
                                     $foregroundColor = $fcTrader;
                                 }
-                                else if(preg_match('/^DFalls_settlement/i', $key))
-                                {
+                                else if(preg_match('/^DFalls_settlement/i', $key)) {
                                     $foregroundColor = $fcSettlement;
                                 }
                                 
@@ -151,20 +142,18 @@ class MapView
     }
     
     /**
-     * @param World $world
-     * @param SevenDaysToDieApp $client
+     * @param  World             $world
+     * @param  SevenDaysToDieApp $client
      * @return bool
      */
     private function Compare_World_Client(World $world, SevenDaysToDieApp $client): bool
     {
         $versionOk = $this -> Compare_World_Client_Version($world, $client);
-        if(!$versionOk)
-        {
+        if(!$versionOk) {
             return false;
         }
         $prefabsOk = $this -> Compare_World_Client_Prefabs($world, $client);
-        if(!$prefabsOk)
-        {
+        if(!$prefabsOk) {
             return false;
         }
         
@@ -172,8 +161,8 @@ class MapView
     }
     
     /** 
-     * @param World $world
-     * @param SevenDaysToDieApp $client
+     * @param  World             $world
+     * @param  SevenDaysToDieApp $client
      * @return bool
      */
     private function Compare_World_Client_Prefabs(World $world, SevenDaysToDieApp $client): bool
@@ -183,8 +172,7 @@ class MapView
 
         foreach($wPrefabs as $prefab)
         {
-            if(!in_array($prefab, $cPrefabs))
-            {
+            if(!in_array($prefab, $cPrefabs)) {
                 return false;
             }
         }
@@ -193,8 +181,8 @@ class MapView
     }
     
     /**
-     * @param World $world
-     * @param SevenDaysToDieApp $client
+     * @param  World             $world
+     * @param  SevenDaysToDieApp $client
      * @return bool
      */
     private function Compare_World_Client_Version(World $world, SevenDaysToDieApp $client): bool

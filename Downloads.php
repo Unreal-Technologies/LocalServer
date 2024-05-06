@@ -1,8 +1,7 @@
 <?php
-require_once('UT.php/.init');
+require_once 'UT.php/.init';
 $downloads = UT_Php\IO\Directory::FromString("Downloads");
-if(!$downloads -> Exists())
-{
+if(!$downloads -> Exists()) {
     $downloads -> Create();
 }
 $root = UT_Php\IO\Directory::FromString('.');
