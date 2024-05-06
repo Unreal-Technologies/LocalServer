@@ -1,4 +1,5 @@
 <?php
+
 namespace MapView;
 
 class SevenDaysToDieApp
@@ -7,22 +8,22 @@ class SevenDaysToDieApp
      * @var bool
      */
     private $isValid_ = false;
-    
+
     /**
      * @var string
      */
     private $name_ = null;
-    
+
     /**
      * @var array
      */
     private $version_ = [];
-    
+
     /**
      * @var string[]
      */
     private $prefabs_ = [];
-    
+
     /**
      * @return array
      */
@@ -30,7 +31,7 @@ class SevenDaysToDieApp
     {
         return $this -> prefabs_;
     }
-    
+
     /**
      * @return array
      */
@@ -38,7 +39,7 @@ class SevenDaysToDieApp
     {
         return $this -> version_;
     }
-    
+
     /**
      * @return bool
      */
@@ -46,7 +47,7 @@ class SevenDaysToDieApp
     {
         return $this -> name_;
     }
-    
+
     /**
      * @return bool
      */
@@ -54,7 +55,7 @@ class SevenDaysToDieApp
     {
         return $this -> isValid_;
     }
-    
+
     /**
      * @param \UT_Php\IO\Directory $app
      */
@@ -68,7 +69,7 @@ class SevenDaysToDieApp
             if (!$app -> exists()) {
                 return;
             }
-            
+
             $bepInEx = \UT_Php\IO\Directory::fromDirectory($app, 'BepInEx');
             $log = null;
 
@@ -81,7 +82,7 @@ class SevenDaysToDieApp
                     $checkAltLog = true;
                 }
             }
-            
+
             if ($checkAltLog) {
                 $data = \UT_Php\IO\Directory::fromDirectory($app, '7DaysToDie_Data');
                 if ($data === null || !$data -> exists()) {
@@ -89,17 +90,17 @@ class SevenDaysToDieApp
                 }
 
                 $list = $data -> list('/^output\_log\_dedi/i');
-                
+
                 if (count($list) == 0) {
                     $localLow = \UT_Php\IO\Directory::fromString(
                         'C:\\Users\\Peter\\AppData\\LocalLow\\The Fun Pimps\\7 Days To Die'
                     );
                     $list = $localLow -> list('/^Player.log$/i');
                 }
-                
+
                 $log = count($list) === 0 ? null : $list[count($list) - 1];
             }
-            
+
             if ($log === null) {
                 return;
             }
@@ -107,14 +108,14 @@ class SevenDaysToDieApp
 
             $this -> getVersion($log, $checkAltLog);
             $this -> getPrefabs($app);
-            
+
             $this -> saveMapView($mapView);
         } else {
             $this -> isValid_ = true;
             $this -> loadMapView($mapView);
         }
     }
-    
+
     /**
      * @param  \UT_Php\IO\File $file
      * @return void
@@ -122,11 +123,11 @@ class SevenDaysToDieApp
     private function loadMapView(\UT_Php\IO\File $file): void
     {
         $data = (array)json_decode(gzuncompress(file_get_contents($file -> path())));
-        
+
         $this -> version_ = (array)$data['Version'];
         $this -> prefabs_ = (array)$data['Prefabs'];
     }
-    
+
     /**
      * @param  \UT_Php\IO\File $file
      * @return void
@@ -140,10 +141,10 @@ class SevenDaysToDieApp
             'Prefabs' => $this -> prefabs_
             ]
         );
-        
+
         file_put_contents($file -> path(), gzcompress($data, 9));
     }
-    
+
     /**
      * @param  \UT_Php\IO\Directory $app
      * @return void
@@ -158,14 +159,14 @@ class SevenDaysToDieApp
             if (!($iDiskManager instanceof \UT_Php\IO\Directory)) {
                 continue;
             }
-            
+
             $modPrefabs = \UT_Php\IO\Directory::fromDirectory($iDiskManager, 'Prefabs');
-            
+
             if ($modPrefabs -> exists()) {
                 $folders[] = $modPrefabs;
             }
         }
-        
+
         $buffer = [];
         foreach ($folders as $folder) {
             $list = $this -> getPrefabsListing($folder);
@@ -174,7 +175,7 @@ class SevenDaysToDieApp
         ksort($buffer);
         $this -> prefabs_ = $buffer;
     }
-    
+
     /**
      * @param  \UT_Php\IO\Directory $dir
      * @return string[]
@@ -187,9 +188,12 @@ class SevenDaysToDieApp
                 $list = $this -> getPrefabsListing($iDiskManager);
                 $buffer = array_merge($buffer, $list);
             } elseif ($iDiskManager instanceof \UT_Php\IO\File && $iDiskManager -> extension() === 'tts') {
-                $prefab = \UT_Php\IO\File::fromDirectory($iDiskManager -> parent(), $iDiskManager -> basename().'.xml');
+                $prefab = \UT_Php\IO\File::fromDirectory(
+                    $iDiskManager -> parent(),
+                    $iDiskManager -> basename() . '.xml'
+                );
                 $prefabXml = \UT_Php\IO\Xml\Document::createFromXml(file_get_contents($prefab -> path()));
-                
+
                 $hasSize = false;
                 foreach ($prefabXml -> search('/^property$/i') as $element) {
                     $attributes = $element -> attributes();
@@ -204,17 +208,17 @@ class SevenDaysToDieApp
                         break;
                     }
                 }
-                
+
                 if (!$hasSize) {
                     $buffer[$iDiskManager -> basename()] = null;
                 }
             }
         }
         ksort($buffer);
-        
+
         return $buffer;
     }
-    
+
     /**
      * @param  \UT_Php\IO\File $log
      * @return void
@@ -222,26 +226,26 @@ class SevenDaysToDieApp
     private function getVersion(\UT_Php\IO\File $log, bool $isAlternativeLog): void
     {
         $stream = file_get_contents($log -> path());
-        
-        $regex = '/^\[Info( )*\:( )*Console\] [0-9]{4}\-[0-9]{2}\-[0-9]{2}'.
+
+        $regex = '/^\[Info( )*\:( )*Console\] [0-9]{4}\-[0-9]{2}\-[0-9]{2}' .
             'T[0-9]{2}\:[0-9]{2}\:[0-9]{2} [0-9\.]{5} INF Version.*$/msiU';
         if ($isAlternativeLog) {
             $regex = '/^[0-9]{4}\-[0-9]{2}\-[0-9]{2}T[0-9]{2}\:[0-9]{2}\:[0-9]{2} [0-9\.]{5} INF Version.*$/msiU';
         }
-        
+
         $matches = [];
         preg_match_all($regex, $stream, $matches);
-        
+
         $rawVersion = trim($matches[0][0]);
         $split = preg_split('/Version\:/', $rawVersion);
-        
+
         $shortRawVersion = trim(substr(trim($split[1]), 0, -13));
         $parts = explode(' ', $shortRawVersion);
-        
+
         $release = $parts[0];
         $beta = substr($parts[2], 2, -1);
         list($major, $minor) = explode('.', $parts[1]);
-        
+
         $this -> version_ = [
             'Release' => $release,
             'Major' => $major,

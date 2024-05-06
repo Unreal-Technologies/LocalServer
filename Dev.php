@@ -1,4 +1,5 @@
 <?php
+
 require_once 'Ut.php\.init';
 
 $collection = [
@@ -35,7 +36,7 @@ $collection = [
     [
         'Name' => 'T6',
         'Id' => 6,
-        'OddValue' =>678,
+        'OddValue' => 678,
         'TypeId' => 4
     ]
 ];
