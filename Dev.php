@@ -1,5 +1,5 @@
 <?php
-require_once('Ut.php\.init');
+require_once 'Ut.php\.init';
 
 $collection = [
     [
@@ -43,18 +43,41 @@ $collection = [
 $lowId = 2;
 
 $query = (new \UT_Php\Collections\Linq($collection)) 
-    -> Where(function($x) use($lowId) { return $x['Id'] > $lowId; })
-    -> Where(function($x) { return $x['Id'] < 10; })
-    -> Select(function($x) { return [
+    -> Where(
+        function ($x) use ($lowId) { 
+            return $x['Id'] > $lowId; 
+        }
+    )
+    -> Where(
+        function ($x) {
+            return $x['Id'] < 10; 
+        }
+    )
+    -> Select(
+        function ($x) {
+            return [
             'Id' => $x['Id'],
             'Value' => $x['OddValue'],
             'TypeId' => $x['TypeId']
-        ];
-    })
+            ];
+        }
+    )
     -> OrderBy(null, UT_Php\Enums\SortDirections::Desc)
-    -> GroupBy(function($x) { return $x['TypeId']; })
-    -> Avg(function($x) { return $x['Value']; })
-    -> Where(function($x) { return $x > 250; });
+    -> GroupBy(
+        function ($x) {
+            return $x['TypeId']; 
+        }
+    )
+    -> Avg(
+        function ($x) {
+            return $x['Value']; 
+        }
+    )
+    -> Where(
+        function ($x) {
+            return $x > 250; 
+        }
+    );
 $result1 = $query -> ToArray();
 $result2 = $query -> FirstOrDefault();
 $result3 = $query -> Count();

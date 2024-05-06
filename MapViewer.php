@@ -1,6 +1,6 @@
 <?php
-require_once('UT.Php/.init');
-require_once('MapView/.init');
+require_once 'UT.Php/.init';
+require_once 'MapView/.init';
 
 $ini = parse_ini_file('MapView.ini', true);
 ini_set('memory_limit', '2G');
@@ -11,8 +11,7 @@ $root = UT_Php\IO\Directory::FromString(__DIR__);
 
 $selected = count($_GET) === 0 || !isset($_GET['selected']) ? null : $_GET['selected'];
 
-if($selected == null)
-{
+if($selected == null) {
     $s = microtime(true);
     $listing = new MapView\MapView($generatedWorlds, $steamCommon, $root);
     $stream = (string)$listing;
