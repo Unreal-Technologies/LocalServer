@@ -139,12 +139,12 @@ table, tr, td, th
 #cv td
 {
     vertical-align: top;
-    padding: 3px;
 }
 
 #cv #personalia
 {
     background-color: #406692;
+    padding: 15px;
 }
 
 #cv #personalia table
@@ -171,6 +171,7 @@ table, tr, td, th
 {
     background-color: white;
     color: black;
+    padding: 15px;
 }
 
 #cv .header
@@ -181,4 +182,14 @@ table, tr, td, th
 #cv .wrapped
 {
     width: 600px;
+}
+
+#cv img
+{
+    filter: drop-shadow(8px 8px 10px lightblue);
+}
+
+#cv #personalia b, #cv #other i
+{
+    color: #c0c0c0;
 }
