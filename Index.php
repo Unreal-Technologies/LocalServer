@@ -5,7 +5,7 @@ const APP_VERSION = new \UT_Php\Version(
     1,
     0,
     0,
-    0,
+    1,
     ['UT.Php' => UT_PHP_VERSION]
 );
 
@@ -18,8 +18,9 @@ const APP_VERSION = new \UT_Php\Version(
     </head>
     <body>
         <div id="menu">
-            <a href="Downloads.php" target="Content">Downloads</a>
+            <a href="https://github.com/Unreal-Technologies" target="_blank">Github</a>
             <a href="MapViewer.php" target="Content">Map Viewer</a>
+            <a href="Downloads.php" target="Content">Downloads</a>
         </div>
         <div id="frame">
             <iframe name="Content"></iframe>
