@@ -17,11 +17,11 @@ const APP_VERSION = new \UT_Php\Version(
         <title>Home</title>
     </head>
     <body>
-        <div id="menu">
+        <div id="menu" class="left">
             <a href="MapViewer.php" target="Content">Map Viewer</a>
             <a href="Downloads.php" target="Content">Downloads</a>
         </div>
-        <div id="frame">
+        <div id="frame" class="left">
             <iframe name="Content"></iframe>
         </div>
         <span id="copyright">

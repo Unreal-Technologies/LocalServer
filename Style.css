@@ -7,11 +7,6 @@ html, body
     color: white;
 }
 
-div
-{
-    float: left;
-}
-
 #menu, #frame
 {
     width: 200px;
@@ -23,6 +18,16 @@ div
     margin: 5px;
     height: calc(100% - 10px);
 
+}
+
+.left
+{
+    float: left;
+}
+
+.right
+{
+    float: right;
 }
 
 #menu a
@@ -129,4 +134,31 @@ table, tr, td, th
 #version a:hover, #copyright a:hover, #DirectoryRender a:hover, #menu a:hover
 {
     color: lightblue;
+}
+
+#cv td
+{
+    vertical-align: top;
+    padding: 3px;
+}
+
+#cv #personalia
+{
+    background-color: #406692;
+}
+
+#cv #other
+{
+    background-color: white;
+    color: black;
+}
+
+#cv .header
+{
+    font-weight: bold;
+}
+
+#cv .wrapped
+{
+    width: 600px;
 }

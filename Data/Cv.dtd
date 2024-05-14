@@ -1,5 +1,5 @@
-<!ELEMENT root (personalia, skills, languages, description, experiences)>
-<!ELEMENT personalia (name, address, phone, email, birthday, city, gender, driverslicence, nationality, state, website)>
+<!ELEMENT root (personalia, skills, languages, description, experiences, educations)>
+<!ELEMENT personalia (photo, name, address, phone, email, birthday, city, gender, driverslicence, nationality, state, website)>
 <!ELEMENT name EMPTY>
 <!ELEMENT address (addressline+)>
 <!ELEMENT addressline (#PCDATA)>
@@ -35,6 +35,9 @@
 <!ELEMENT description (#PCDATA)>
 <!ELEMENT experiences (experience+)>
 <!ELEMENT experience (#PCDATA)>
+<!ELEMENT photo EMPTY>
+<!ELEMENT educations (education+)>
+<!ELEMENT education (#PCDATA)>
 
 <!ATTLIST name value CDATA #REQUIRED>
 <!ATTLIST phone value CDATA #REQUIRED>
@@ -87,3 +90,9 @@
 <!ATTLIST experience title CDATA #REQUIRED>
 <!ATTLIST experience company CDATA #REQUIRED>
 <!ATTLIST experience location CDATA #REQUIRED>
+<!ATTLIST photo value CDATA #REQUIRED>
+<!ATTLIST education start CDATA #REQUIRED>
+<!ATTLIST education end CDATA #REQUIRED>
+<!ATTLIST education title CDATA #REQUIRED>
+<!ATTLIST education school CDATA #REQUIRED>
+<!ATTLIST education location CDATA #REQUIRED>

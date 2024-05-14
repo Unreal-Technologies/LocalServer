@@ -50,7 +50,7 @@ class World
     public function visuals(): \UT_Php\IO\File
     {
         $f = $this -> render_ === null || !$this -> render_ -> exists() ? $this -> biomes_ : $this -> render_;
-        $images = \UT_Php\IO\Directory::fromString('Images');
+        $images = \UT_Php\IO\Directory::fromString('Content/Images');
         if (!$images -> exists()) {
             $images -> create();
         }
