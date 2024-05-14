@@ -44,7 +44,6 @@ div
 
 #menu a:hover
 {
-    color: lightblue;
     background-color: #606060;
 }
 
@@ -95,11 +94,6 @@ table, tr, td, th
     text-decoration: none;
 }
 
-#DirectoryRender a:hover
-{
-    color: lightblue;
-}
-
 #DirectoryRender .header
 {
     font-style: italic;
@@ -124,4 +118,15 @@ table, tr, td, th
 #DirectoryRender .right
 {
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAABYlAAAWJQFJUiTwAAAARUlEQVR42u3RwQkAIAwEwSR/++9TC7hoC95DkD3YZ2AgpRlx3Zlzv6t4PAAAAAAAAACADxiSkwdYmW4fvAAAAAAAAAAw11pucWHSb5gnAAAAAElFTkSuQmCC");
+}
+
+#version a, #copyright a
+{
+    color: white;
+    text-underline-offset: 3px;
+}
+
+#version a:hover, #copyright a:hover, #DirectoryRender a:hover, #menu a:hover
+{
+    color: lightblue;
 }
