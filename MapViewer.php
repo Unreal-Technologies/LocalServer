@@ -2,7 +2,7 @@
 require_once 'UT.Php/.init';
 require_once 'MapView/.init';
 
-$ini = parse_ini_file('MapView.ini', true);
+$ini = parse_ini_file('Configuration/MapView.ini', true);
 ini_set('memory_limit', '2G');
 
 $generatedWorlds = UT_Php\IO\Directory::fromString($ini['MapView']['GeneratedWorlds']);
