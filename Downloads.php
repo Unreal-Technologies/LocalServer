@@ -1,6 +1,6 @@
 <?php
 require_once 'UT.php/.init';
-$downloads = UT_Php\IO\Directory::fromString("Downloads");
+$downloads = UT_Php\IO\Directory::fromString("Content/Downloads");
 if (!$downloads -> exists()) {
     $downloads -> create();
 }

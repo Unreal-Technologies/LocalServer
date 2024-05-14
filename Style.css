@@ -7,11 +7,6 @@ html, body
     color: white;
 }
 
-div
-{
-    float: left;
-}
-
 #menu, #frame
 {
     width: 200px;
@@ -23,6 +18,16 @@ div
     margin: 5px;
     height: calc(100% - 10px);
 
+}
+
+.left
+{
+    float: left;
+}
+
+.right
+{
+    float: right;
 }
 
 #menu a
@@ -44,7 +49,6 @@ div
 
 #menu a:hover
 {
-    color: lightblue;
     background-color: #606060;
 }
 
@@ -95,11 +99,6 @@ table, tr, td, th
     text-decoration: none;
 }
 
-#DirectoryRender a:hover
-{
-    color: lightblue;
-}
-
 #DirectoryRender .header
 {
     font-style: italic;
@@ -124,4 +123,62 @@ table, tr, td, th
 #DirectoryRender .right
 {
     background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAABYlAAAWJQFJUiTwAAAARUlEQVR42u3RwQkAIAwEwSR/++9TC7hoC95DkD3YZ2AgpRlx3Zlzv6t4PAAAAAAAAACADxiSkwdYmW4fvAAAAAAAAAAw11pucWHSb5gnAAAAAElFTkSuQmCC");
+}
+
+#version a, #copyright a
+{
+    color: white;
+    text-underline-offset: 3px;
+}
+
+#version a:hover, #copyright a:hover, #DirectoryRender a:hover, #menu a:hover
+{
+    color: lightblue;
+}
+
+#cv td
+{
+    vertical-align: top;
+    padding: 3px;
+}
+
+#cv #personalia
+{
+    background-color: #406692;
+}
+
+#cv #personalia table
+{
+    width: 100%;
+}
+
+#cv #personalia table td:last-child
+{
+    text-align: right;
+}
+
+#cv #personalia a
+{
+    color: white;
+}
+
+#cv #personalia a:hover
+{
+    color: lightblue;
+}
+
+#cv #other
+{
+    background-color: white;
+    color: black;
+}
+
+#cv .header
+{
+    font-weight: bold;
+}
+
+#cv .wrapped
+{
+    width: 600px;
 }

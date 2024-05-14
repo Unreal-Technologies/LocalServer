@@ -5,7 +5,7 @@ const APP_VERSION = new \UT_Php\Version(
     1,
     0,
     0,
-    1,
+    2,
     ['UT.Php' => UT_PHP_VERSION]
 );
 
@@ -17,15 +17,18 @@ const APP_VERSION = new \UT_Php\Version(
         <title>Home</title>
     </head>
     <body>
-        <div id="menu">
-            <a href="https://github.com/Unreal-Technologies" target="_blank">Github</a>
+        <div id="menu" class="left">
             <a href="MapViewer.php" target="Content">Map Viewer</a>
             <a href="Downloads.php" target="Content">Downloads</a>
         </div>
-        <div id="frame">
+        <div id="frame" class="left">
             <iframe name="Content"></iframe>
         </div>
-        <span id="copyright">&copy; Peter Overeijnder <?php echo date('Y'); ?></span>
-        <span id="version">Version <?php echo APP_VERSION; ?></span>
+        <span id="copyright">
+            <a href="cv.php" target="Content">&copy; Peter Overeijnder <?php echo date('Y'); ?></a>
+        </span>
+        <span id="version">
+            <a href="https://github.com/Unreal-Technologies" target="_blank">Version <?php echo APP_VERSION; ?></a>
+        </span>
     </body>
 </html>

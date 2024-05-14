@@ -1,0 +1,98 @@
+<!ELEMENT root (personalia, skills, languages, description, experiences, educations)>
+<!ELEMENT personalia (photo, name, address, phone, email, birthday, city, gender, driverslicence, nationality, state, website)>
+<!ELEMENT name EMPTY>
+<!ELEMENT address (addressline+)>
+<!ELEMENT addressline (#PCDATA)>
+<!ELEMENT phone EMPTY>
+<!ELEMENT email EMPTY>
+<!ELEMENT birthday EMPTY>
+<!ELEMENT city EMPTY>
+<!ELEMENT gender EMPTY>
+<!ELEMENT driverslicence (am, a1, a2, a, b1, b, c1, c, d1, d, be, c1e, ce, d1e, de, t)>
+<!ELEMENT nationality EMPTY>
+<!ELEMENT state EMPTY>
+<!ELEMENT website EMPTY>
+<!ELEMENT am EMPTY>
+<!ELEMENT a1 EMPTY>
+<!ELEMENT a2 EMPTY>
+<!ELEMENT a EMPTY>
+<!ELEMENT b1 EMPTY>
+<!ELEMENT b EMPTY>
+<!ELEMENT c1 EMPTY>
+<!ELEMENT c EMPTY>
+<!ELEMENT d1 EMPTY>
+<!ELEMENT d EMPTY>
+<!ELEMENT be EMPTY>
+<!ELEMENT c1e EMPTY>
+<!ELEMENT ce EMPTY>
+<!ELEMENT d1e EMPTY>
+<!ELEMENT de EMPTY>
+<!ELEMENT t EMPTY>
+<!ELEMENT skills (skill+)>
+<!ELEMENT skill EMPTY>
+<!ELEMENT languages (language+)>
+<!ELEMENT language EMPTY>
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT experiences (experience+)>
+<!ELEMENT experience (#PCDATA)>
+<!ELEMENT photo EMPTY>
+<!ELEMENT educations (education+)>
+<!ELEMENT education (#PCDATA)>
+
+<!ATTLIST name value CDATA #REQUIRED>
+<!ATTLIST phone value CDATA #REQUIRED>
+<!ATTLIST email value CDATA #REQUIRED>
+<!ATTLIST birthday value CDATA #REQUIRED>
+<!ATTLIST city value CDATA #REQUIRED>
+<!ATTLIST gender value CDATA #REQUIRED>
+<!ATTLIST nationality value CDATA #REQUIRED>
+<!ATTLIST state value CDATA #REQUIRED>
+<!ATTLIST website value CDATA #REQUIRED>
+<!ATTLIST am start CDATA #IMPLIED>
+<!ATTLIST am end CDATA #IMPLIED>
+<!ATTLIST a1 start CDATA #IMPLIED>
+<!ATTLIST a1 end CDATA #IMPLIED>
+<!ATTLIST a2 start CDATA #IMPLIED>
+<!ATTLIST a2 end CDATA #IMPLIED>
+<!ATTLIST a start CDATA #IMPLIED>
+<!ATTLIST a end CDATA #IMPLIED>
+<!ATTLIST b1 start CDATA #IMPLIED>
+<!ATTLIST b1 end CDATA #IMPLIED>
+<!ATTLIST b start CDATA #IMPLIED>
+<!ATTLIST b end CDATA #IMPLIED>
+<!ATTLIST c1 start CDATA #IMPLIED>
+<!ATTLIST c1 end CDATA #IMPLIED>
+<!ATTLIST c start CDATA #IMPLIED>
+<!ATTLIST c end CDATA #IMPLIED>
+<!ATTLIST d1 start CDATA #IMPLIED>
+<!ATTLIST d1 end CDATA #IMPLIED>
+<!ATTLIST d start CDATA #IMPLIED>
+<!ATTLIST d end CDATA #IMPLIED>
+<!ATTLIST be start CDATA #IMPLIED>
+<!ATTLIST be end CDATA #IMPLIED>
+<!ATTLIST c1e start CDATA #IMPLIED>
+<!ATTLIST c1e end CDATA #IMPLIED>
+<!ATTLIST ce start CDATA #IMPLIED>
+<!ATTLIST ce end CDATA #IMPLIED>
+<!ATTLIST d1e start CDATA #IMPLIED>
+<!ATTLIST d1e end CDATA #IMPLIED>
+<!ATTLIST de start CDATA #IMPLIED>
+<!ATTLIST de end CDATA #IMPLIED>
+<!ATTLIST t start CDATA #IMPLIED>
+<!ATTLIST t end CDATA #IMPLIED>
+<!ATTLIST skill name CDATA #REQUIRED>
+<!ATTLIST skill value CDATA #REQUIRED>
+<!ATTLIST language name CDATA #REQUIRED>
+<!ATTLIST language value CDATA #REQUIRED>
+<!ATTLIST experience start CDATA #REQUIRED>
+<!ATTLIST experience end CDATA #REQUIRED>
+<!ATTLIST experience currentlyAtWork CDATA #REQUIRED>
+<!ATTLIST experience title CDATA #REQUIRED>
+<!ATTLIST experience company CDATA #REQUIRED>
+<!ATTLIST experience location CDATA #REQUIRED>
+<!ATTLIST photo value CDATA #REQUIRED>
+<!ATTLIST education start CDATA #REQUIRED>
+<!ATTLIST education end CDATA #REQUIRED>
+<!ATTLIST education title CDATA #REQUIRED>
+<!ATTLIST education school CDATA #REQUIRED>
+<!ATTLIST education location CDATA #REQUIRED>
