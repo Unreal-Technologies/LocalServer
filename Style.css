@@ -147,6 +147,26 @@ table, tr, td, th
     background-color: #406692;
 }
 
+#cv #personalia table
+{
+    width: 100%;
+}
+
+#cv #personalia table td:last-child
+{
+    text-align: right;
+}
+
+#cv #personalia a
+{
+    color: white;
+}
+
+#cv #personalia a:hover
+{
+    color: lightblue;
+}
+
 #cv #other
 {
     background-color: white;
