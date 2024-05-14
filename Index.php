@@ -24,7 +24,11 @@ const APP_VERSION = new \UT_Php\Version(
         <div id="frame">
             <iframe name="Content"></iframe>
         </div>
-        <span id="copyright"><a href="cv.php" target="Content">&copy; Peter Overeijnder <?php echo date('Y'); ?></a></span>
-        <span id="version"><a href="https://github.com/Unreal-Technologies" target="_blank">Version <?php echo APP_VERSION; ?></a></span>
+        <span id="copyright">
+            <a href="cv.php" target="Content">&copy; Peter Overeijnder <?php echo date('Y'); ?></a>
+        </span>
+        <span id="version">
+            <a href="https://github.com/Unreal-Technologies" target="_blank">Version <?php echo APP_VERSION; ?></a>
+        </span>
     </body>
 </html>
