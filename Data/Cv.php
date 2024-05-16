@@ -85,6 +85,11 @@ class Cv
     private $educations;
 
     /**
+     * @var string
+     */
+    private $gender;
+    
+    /**
      * @param \UT_Php\IO\Common\Xml $file
      * @param string $root
      */
