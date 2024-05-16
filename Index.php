@@ -5,7 +5,7 @@ const APP_VERSION = new \UT_Php\Version(
     1,
     0,
     0,
-    3,
+    4,
     ['UT.Php' => UT_PHP_VERSION]
 );
 
