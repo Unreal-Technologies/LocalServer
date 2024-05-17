@@ -16,10 +16,10 @@ foreach(\UT_Php\IO\Directory::fromString('Pages') -> list() as $iDiskManager)
         $relative = $iDiskManager -> relativeTo($root);
         $class = '\\'.str_replace('/', '\\', str_replace('.'.$iDiskManager -> extension() , '', $relative));
         
-        $router -> add(\UT_Php\Enums\RequestMethods::Get, '/'.$iDiskManager -> basename(), function() use($class, $root, $relative)
+        $router -> add(\UT_Php\Enums\RequestMethods::Get, '/'.$iDiskManager -> basename(), function() use($router, $class, $relative)
         {
             require_once $relative;
-            echo new $class($root);
+            echo new $class($router);
         });
     }
 }
