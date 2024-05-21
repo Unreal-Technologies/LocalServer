@@ -1,34 +1,28 @@
 <?php
+
 require_once 'UT.php/.init';
 
-const APP_VERSION = new \UT_Php\Version(
-    1,
-    0,
-    0,
-    3,
-    ['UT.Php' => UT_PHP_VERSION]
-);
+$root = \UT_Php\IO\Directory::fromString(__DIR__);
 
-?>
-<!DOCTYPE>
-<html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="style.css"/>
-        <title>Home</title>
-    </head>
-    <body>
-        <div id="menu" class="left">
-            <a href="MapViewer.php" target="Content">Map Viewer</a>
-            <a href="Downloads.php" target="Content">Downloads</a>
-        </div>
-        <div id="frame" class="left">
-            <iframe name="Content"></iframe>
-        </div>
-        <span id="copyright">
-            <a href="cv.php" target="Content">&copy; Peter Overeijnder <?php echo date('Y'); ?></a>
-        </span>
-        <span id="version">
-            <a href="https://github.com/Unreal-Technologies" target="_blank">Version <?php echo APP_VERSION; ?></a>
-        </span>
-    </body>
-</html>
+$router = new \UT_Php\Routing\Router($root, true);
+$router -> add(\UT_Php\Enums\RequestMethods::Get, '/', function () {
+    header('location: /main');
+});
+
+foreach (\UT_Php\IO\Directory::fromString('Pages') -> list() as $iDiskManager) {
+    if ($iDiskManager instanceof UT_Php\Interfaces\IFile && $iDiskManager -> extension() === 'php') {
+        $relative = $iDiskManager -> relativeTo($root);
+        $class = '\\' . str_replace('/', '\\', str_replace('.' . $iDiskManager -> extension(), '', $relative));
+
+        $router -> add(
+            \UT_Php\Enums\RequestMethods::Get,
+            '/' . $iDiskManager -> basename(),
+            function () use ($router, $class, $relative) {
+                require_once $relative;
+                echo new $class($router);
+            }
+        );
+    }
+}
+
+$router -> match();

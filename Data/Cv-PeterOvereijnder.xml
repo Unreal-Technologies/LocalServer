@@ -1,0 +1,78 @@
+<root>
+    <personalia>
+        <photo value="photo.png" />
+        <name value="Peter Overeijnder" />
+        <address>
+            <addressline>Jupiterstraat, 22</addressline>
+            <addressline>De Krim, 7782 RD</addressline>
+        </address>
+        <phone value="06-34659961" />
+        <email value="peterovereijnder@hotmail.com" />
+        <birthday value="1990-04-14" />
+        <city value="Hardenberg" />
+        <gender value="Man" />
+        <driverslicence>
+            <am start="2011-06-23" end="2031-06-18" />
+            <a1 />
+            <a2 />
+            <a />
+            <b1 />
+            <b start="2011-06-23" end="2031-06-18" />
+            <c1 />
+            <c />
+            <d1 />
+            <d />
+            <be />
+            <c1e />
+            <ce />
+            <d1e />
+            <de />
+            <t start="2021-06-18" end="2031-06-18" />
+        </driverslicence>
+        <nationality value="Nederlands" />
+        <state value="Ongehuwd" />
+        <website value="http://141.224.246.161" />
+    </personalia>
+    <skills>
+        <skill name="Php" value="Ervaren" />
+        <skill name="C# .Net Core" value="Ervaren" />
+        <skill name="C# .Net Framework" value="Ervaren" />
+        <skill name="Javascript" value="Ervaren" />
+        <skill name="Html / Css" value="Ervaren" />
+        <skill name="Mysql / Mssql" value="Ervaren" />
+        <skill name="EF Core" value="Bekwaam" />
+    </skills>
+    <languages>
+        <language name="Nederlands" value="Moedertaal" />
+        <language name="Engels" value="Vloeiend" />
+    </languages>
+    <description>
+        Ik ben een senior software developer met meer dan 9 jaar (fulltime) werkervaring in bouwen van interne administratieve systemen.
+    </description>
+    <experiences>
+        <experience start="2008-07" end="2015-06" currentlyAtWork="0" title="Software Developer" company="DGB (Energie Centrum Hardenberg, Degrosolutions)" location="Hardenberg">
+        Gewerkt aan urenmanagementsysteem &amp; planning systeem, op basis van 0 uren contract
+
+        Dit is gemaakt met puur PHP (geen frameworks)
+        </experience>
+        <experience start="2015-06" end="2024-02" currentlyAtWork="0" title="Software Developer" company="DGB (Energie Centrum Hardenberg, Degrosolutions)" location="Hardenberg">
+        Jaren gewerkt aan urenmanagement systeem &amp; planning systeem
+        Dit is gemaakt met puur PHP (geen frameworks)
+
+        uitgezet i.v.m. inkrimping van bedrijf (Energie gedeelte ging eraf)
+        </experience>
+        <experience start="2024-03" end="2024-04" currentlyAtWork="0" title="Software Developer" company="Logic4" location="Enschede">
+        Proefperiode bij logic 4,
+
+        Ik heb hier in deze periode alleen aan probleemoplossing gedaan.
+        onderstaand volgt de reden van beeindiging proefperiode:
+
+        "Ik vind het persoonlijk erg jammer dat we al na een maand uit elkaar moeten gaan. Ik waardeer bijzonder de hands-on mentaliteit die je hebt laten zien. In een omgeving waar vooral problemen moeten worden opgelost ben je naar mijn mening een ontzettende aanwinst. Helaas is Logic4 een bedrijf waarbij de praktische oplossing vaak ondergeschikt is aan de duurzaamheid en de risicobeheersing voor onze klanten. Als we meer tijd hadden gehad om samen te kijken waar je naar toe kunt groeien dan had ik die graag genomen. Echter stelt de wetgeving duidelijke grenzen aan wat wel en niet mag, waardoor de beslissing ook daadwerkelijk nu moet plaatsvinden.Ik hoop dat je deze ervaring voor jezelf ten positieve kunt gebruiken om een plek te vinden waar je op een prettige manier veel praktisch problemen kunt oplossen. Naar mijn mening ben je een ontzettende aanwinst op dat vlak en mag ieder bedrijf dat met zulke uitdagingen te kampen heeft zich gelukkig prijzen jou in het team te hebben."
+        </experience>
+    </experiences>
+    <educations>
+        <education start="2007-01" end="2010-01" title="Mbo Medewerker beheer ICT" school="Alfa College" location="Hardenberg">
+            ICT opleiding
+        </education>
+    </educations>
+</root>
