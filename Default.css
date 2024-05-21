@@ -7,6 +7,11 @@ html, body
     color: white;
 }
 
+body
+{
+    padding: 5px;
+}
+
 #menu, #frame
 {
     width: 200px;
