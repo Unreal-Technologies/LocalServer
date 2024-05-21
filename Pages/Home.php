@@ -1,55 +1,162 @@
 <?php
+
 namespace Pages;
 
 class Home extends \UT_Php\Html\PageController
 {
+    private const SERVER_SEVENDAYSTODIE = '7 Days To Die';
+    private const SERVER_MINECRAFT = 'Minecraft';
+
     /**
-     * @var \UT_Php\Version
+     * @var array
      */
-    private $version;
-    
+    private array $instances;
+
+    /**
+     * @var array
+     */
+    private array $processes;
+
     /**
      * @return void
      */
-    public function initialize(): void 
+    public function initialize(): void
     {
-        $this -> version = new \UT_Php\Version(
-            1,
-            0,
-            0,
-            4,
-            ['UT.Php' => UT_PHP_VERSION]
-        );
+        $processes = \UT_Php\IO\Process::list();
+        $serversInstances = [
+            self::SERVER_SEVENDAYSTODIE => ['7daystodieserver.exe', '7daystodie.exe'],
+            self::SERVER_MINECRAFT => ['javaw.exe', 'java.exe']
+        ];
+
+        $active = (new \UT_Php\Collections\Linq($processes))
+            -> toArray(function ($x) use ($serversInstances) {
+                foreach ($serversInstances as $v) {
+                    if (in_array(strtolower($x -> name()), $v)) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+
+        $buffer = [];
+        foreach ($active as $process) {
+            $instance = null;
+            foreach ($serversInstances as $k => $v) {
+                if (in_array(strtolower($process -> name()), $v)) {
+                    $instance = $k;
+                }
+            }
+
+            $isValidatedInstance = false;
+            $selectedInfo = null;
+
+            foreach ($process -> pidList() as $pid) {
+                $info = $process -> pidInfo($pid);
+                if (
+                    $instance === self::SERVER_MINECRAFT &&
+                    strpos($info -> get('CommandLine'), 'minecraft') !== false
+                ) {
+                    $isValidatedInstance = true;
+                    $selectedInfo = $info;
+                } elseif ($instance === self::SERVER_SEVENDAYSTODIE) {
+                    $isValidatedInstance = true;
+                    $selectedInfo = $info;
+                }
+            }
+
+            if ($isValidatedInstance) {
+                $buffer[$instance] = [$process, $selectedInfo];
+            }
+        }
+
+        $this -> instances = $serversInstances;
+        $this -> processes = $buffer;
     }
-    
+
     /**
      * @return string
      */
-    public function render(): string 
+    public function render(): string
     {
-        $html = '<div id="menu" class="left">';
-        $html .= '<a href="MapViewer" target="Content">Map Viewer</a>';
-        $html .= '<a href="Downloads" target="Content">Downloads</a>';
-        $html .= '</div>';
-        $html .= '<div id="frame" class="left">';
-        $html .= '<iframe name="Content"></iframe>';
-        $html .= '</div>';
-        $html .= '<span id="copyright">';
-        $html .= '<a href="cv" target="Content">&copy; Peter Overeijnder '.date('Y').'</a>';
-        $html .= '</span>';
-        $html .= '<span id="version">';
-        $html .= '<a href="https://github.com/Unreal-Technologies" target="_blank">Version '.$this -> version.'</a>';
-        $html .= '</span>';
+        $html = '<h1>Home</h1><hr />';
+        $html .= '<h3>Game Servers</h3>';
+        $html .= '<table>';
+        $html .= '<tr><th>Server</th><th>State</th><th>Memory Usage</th><th>PID</th><th>Uptime</th></tr>';
+        foreach (array_keys($this -> instances) as $instance) {
+            $isActive = isset($this -> processes[$instance]);
+            $pid = $isActive ? $this -> processes[$instance][1] -> get('ProcessId') : 'N/A';
+            $memory = $isActive ? $this -> processes[$instance][0] -> pidMemory($pid, true) : 'N/A';
+            $creationDate = $isActive ? $this -> processes[$instance][1] -> get('CreationDate') : 'N/A';
+
+            $uptime = $isActive ? $this -> secondsToDisplay($this -> calculateUpTime($creationDate)) : 'N/A';
+
+            $html .= '<tr><td>' .
+                $instance .
+                '</td><td>' .
+                ($isActive ? '<span class="green">Online</span>' : '<span class="red">Offline</span>') .
+                '</td><td' . ($isActive ? '' : ' class="inactive"') . '>' .
+                $memory .
+                '</td><td' . ($isActive ? '' : ' class="inactive"') . '>' .
+                $pid .
+                '</td><td' . ($isActive ? '' : ' class="inactive"') . '>' .
+                $uptime .
+                '</td></tr>';
+        }
+        $html .= '</table>';
+
         return $html;
     }
-    
+
+    /**
+     * @param int $seconds
+     * @return string
+     */
+    private function secondsToDisplay(int $seconds): string
+    {
+        $hours = floor($seconds / 3600);
+        $seconds -= $hours * 3600;
+        $minutes = floor($seconds / 60);
+        $seconds -= $minutes * 60;
+
+        $days = floor($hours / 24);
+        $hours -= $days * 24;
+
+        return $days .
+            'd ' .
+            str_pad($hours, 2, '0', 0) .
+            ':' .
+            str_pad($minutes, 2, '0', 0) .
+            ':' .
+            str_pad($seconds, 2, '0', 0);
+    }
+
+    /**
+     * @param string $creationDate
+     * @return int
+     */
+    private function calculateUpTime(string $creationDate): int
+    {
+        $y = substr($creationDate, 0, 4);
+        $M = substr($creationDate, 4, 2);
+        $d = substr($creationDate, 6, 2);
+        $h = substr($creationDate, 8, 2);
+        $m = substr($creationDate, 10, 2);
+        $s = substr($creationDate, 12, 9);
+
+        $start = new \DateTime($y . '-' . $M . '-' . $d . ' ' . $h . ':' . $m . ':' . $s);
+        $now = new \DateTime();
+
+        return $now -> format('U') - $start -> format('U');
+    }
+
     /**
      * @param string $title
-     * @param array $css
+     * @param \UT_Php\Interfaces\IFile[] $css
      * @return void
      */
-    public function setup(string &$title, array &$css): void 
+    public function setup(string &$title, array &$css): void
     {
-        $title = 'A Lonely Gameserver';
+        $title = 'Home';
+        $css[] = \UT_Php\IO\File::fromString(__DIR__ . '/Home.css');
     }
 }

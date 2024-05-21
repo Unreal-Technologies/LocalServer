@@ -1,0 +1,53 @@
+table, th, td
+{
+    border-width: 0px;
+    border-style: solid;
+    border-color: #000000;
+    border-spacing: 0;
+}
+
+th, td
+{
+    border-right-width: 1px;
+    border-top-width: 1px;
+}
+
+tr th:first-child
+{
+    border-left-width: 1px;
+}
+
+tr:last-of-type th, tr:last-of-type td
+{
+    border-bottom-width: 1px;
+}
+
+td, th
+{
+    padding: 4px;
+}
+
+td:not(:first-child)
+{
+    text-align: right;
+}
+
+td:nth-child(2)
+{
+    text-align: center;
+}
+
+.inactive
+{
+    color: #505050;
+}
+
+.green
+{
+    color: #00aa00;
+}
+
+.red
+{
+    color: #aa0000;
+}

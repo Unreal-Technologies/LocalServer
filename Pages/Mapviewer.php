@@ -1,4 +1,5 @@
 <?php
+
 namespace Pages;
 
 class Mapviewer extends \UT_Php\Html\PageController
@@ -7,16 +8,16 @@ class Mapviewer extends \UT_Php\Html\PageController
      * @var \UT_Php\Interfaces\IDirectory
      */
     private $generatedWorlds;
-    
+
     /**
      * @var \UT_Php\Interfaces\IDirectory
      */
     private $steamCommon;
-    
+
     /**
      * @return void
      */
-    public function initialize(): void 
+    public function initialize(): void
     {
         require_once 'MapView/.init';
 
@@ -26,11 +27,11 @@ class Mapviewer extends \UT_Php\Html\PageController
         $this -> generatedWorlds = \UT_Php\IO\Directory::fromString($ini['MapView']['GeneratedWorlds']);
         $this -> steamCommon = \UT_Php\IO\Directory::fromString($ini['MapView']['SteamCommon']);
     }
-    
+
     /**
      * @return string
      */
-    public function render(): string 
+    public function render(): string
     {
         $s = microtime(true);
         $listing = new \MapView\MapView($this -> generatedWorlds, $this -> steamCommon, $this -> root());
@@ -39,18 +40,18 @@ class Mapviewer extends \UT_Php\Html\PageController
         $dif = ($e - $s) * 1000;
 
         $stream .= '<hr />' . number_format($dif, 0, ',', '.') . ' ms';
-        
-        return $stream;
+
+        return '<h1>Map Viewer</h1><hr />' . $stream;
     }
-    
+
     /**
      * @param string $title
      * @param array $css
      * @return void
      */
-    public function setup(string &$title, array &$css): void 
+    public function setup(string &$title, array &$css): void
     {
         $title = 'Map Viewer';
-        $css[] = \UT_Php\IO\File::fromString(__DIR__.'/Mapviewer.css');
+        $css[] = \UT_Php\IO\File::fromString(__DIR__ . '/Mapviewer.css');
     }
 }
