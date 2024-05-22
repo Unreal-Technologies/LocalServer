@@ -18,7 +18,7 @@ class Main extends \UT_Php\Html\PageController
             1,
             0,
             0,
-            5,
+            6,
             ['UT.Php' => UT_PHP_VERSION]
         );
     }

@@ -18,6 +18,10 @@ class Home extends \UT_Php\Html\PageController
     private array $processes;
 
     /**
+     * @var \UT_Php\IO\Memory
+     */
+    private \UT_Php\IO\Memory $ram;
+    /**
      * @return void
      */
     public function initialize(): void
@@ -71,6 +75,17 @@ class Home extends \UT_Php\Html\PageController
 
         $this -> instances = $serversInstances;
         $this -> processes = $buffer;
+
+        $this -> ram = \UT_Php\IO\Memory::fromInt(
+            (new \UT_Php\Collections\Linq(\UT_Php\IO\Server::ram()))
+            -> select(function (\UT_Php\IO\Memory $x) {
+                return $x -> value();
+            })
+            -> sum(function (int $x) {
+                return $x;
+            })
+            -> firstOrDefault()
+        );
     }
 
     /**
@@ -79,9 +94,13 @@ class Home extends \UT_Php\Html\PageController
     public function render(): string
     {
         $html = '<h1>Home</h1><hr />';
-        $html .= '<h3>Game Servers</h3>';
-        $html .= '<table>';
-        $html .= '<tr><th>Server</th><th>State</th><th>Memory Usage</th><th>PID</th><th>Uptime</th></tr>';
+        $html .= '<table class="tableView">';
+        $html .= '<tr>'
+            . '<th colspan="2" class="cl ct">Game Servers</th>'
+            . '<th colspan="2">Memory ' . $this -> ram -> format(0) . '</th>'
+            . '<th colspan="2" class="cr ct" />'
+            . '</tr>';
+        $html .= '<tr><th>Server</th><th>State</th><th>Usage</th><th>%</th><th>PID</th><th>Uptime</th></tr>';
         foreach (array_keys($this -> instances) as $instance) {
             $isActive = isset($this -> processes[$instance]);
             $pid = $isActive ? $this -> processes[$instance][1] -> get('ProcessId') : 'N/A';
@@ -89,6 +108,14 @@ class Home extends \UT_Php\Html\PageController
             $creationDate = $isActive ? $this -> processes[$instance][1] -> get('CreationDate') : 'N/A';
 
             $uptime = $isActive ? $this -> secondsToDisplay($this -> calculateUpTime($creationDate)) : 'N/A';
+            $memoryPerc = $isActive ?
+                number_format(
+                    ($this -> processes[$instance][0] -> pidMemory($pid) / $this -> ram -> value()) * 100,
+                    2,
+                    ',',
+                    '.'
+                ) . ' %' :
+                'N/A';
 
             $html .= '<tr><td>' .
                 $instance .
@@ -96,6 +123,8 @@ class Home extends \UT_Php\Html\PageController
                 ($isActive ? '<span class="green">Online</span>' : '<span class="red">Offline</span>') .
                 '</td><td' . ($isActive ? '' : ' class="inactive"') . '>' .
                 $memory .
+                '</td><td' . ($isActive ? '' : ' class="inactive"') . '>' .
+                $memoryPerc .
                 '</td><td' . ($isActive ? '' : ' class="inactive"') . '>' .
                 $pid .
                 '</td><td' . ($isActive ? '' : ' class="inactive"') . '>' .
@@ -158,5 +187,6 @@ class Home extends \UT_Php\Html\PageController
     {
         $title = 'Home';
         $css[] = \UT_Php\IO\File::fromString(__DIR__ . '/Home.css');
+        $css[] = \UT_Php\IO\File::fromString(__DIR__ . '/TableView.css');
     }
 }
