@@ -6,6 +6,7 @@ class Home extends \UT_Php\Html\PageController
 {
     private const SERVER_SEVENDAYSTODIE = '7 Days To Die';
     private const SERVER_MINECRAFT = 'Minecraft';
+    private const SERVER_PALWORLD = 'Palworld';
 
     /**
      * @var array
@@ -29,7 +30,8 @@ class Home extends \UT_Php\Html\PageController
         $processes = \UT_Php\IO\Process::list();
         $serversInstances = [
             self::SERVER_SEVENDAYSTODIE => ['7daystodieserver.exe', '7daystodie.exe'],
-            self::SERVER_MINECRAFT => ['javaw.exe', 'java.exe']
+            self::SERVER_MINECRAFT => ['javaw.exe', 'java.exe'],
+            self::SERVER_PALWORLD => ['PalServer-Win64-Test-Cmd.exe']
         ];
 
         $active = (new \UT_Php\Collections\Linq($processes))
@@ -62,7 +64,7 @@ class Home extends \UT_Php\Html\PageController
                 ) {
                     $isValidatedInstance = true;
                     $selectedInfo = $info;
-                } elseif ($instance === self::SERVER_SEVENDAYSTODIE) {
+                } elseif ($instance === self::SERVER_SEVENDAYSTODIE || $instance === self::SERVER_PALWORLD) {
                     $isValidatedInstance = true;
                     $selectedInfo = $info;
                 }
