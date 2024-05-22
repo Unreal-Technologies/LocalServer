@@ -141,60 +141,17 @@ table, tr, td, th
     color: lightblue;
 }
 
-#cv td
+.inactive
 {
-    vertical-align: top;
+    color: #505050;
 }
 
-#cv #personalia
+.green
 {
-    background-color: #406692;
-    padding: 15px;
+    color: #00aa00;
 }
 
-#cv #personalia table
+.red
 {
-    width: 100%;
-}
-
-#cv #personalia table td:last-child
-{
-    text-align: right;
-}
-
-#cv #personalia a
-{
-    color: white;
-}
-
-#cv #personalia a:hover
-{
-    color: lightblue;
-}
-
-#cv #other
-{
-    background-color: white;
-    color: black;
-    padding: 15px;
-}
-
-#cv .header
-{
-    font-weight: bold;
-}
-
-#cv .wrapped
-{
-    width: 600px;
-}
-
-#cv img
-{
-    filter: drop-shadow(8px 8px 10px lightblue);
-}
-
-#cv #personalia b, #cv #other i
-{
-    color: #c0c0c0;
+    color: #aa0000;
 }

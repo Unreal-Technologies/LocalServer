@@ -28,6 +28,7 @@ class Cv extends \UT_Php\Html\PageController
     public function setup(string &$title, array &$css): void
     {
         $title = 'Curriculum Vitae';
+        $css[] = \UT_Php\IO\File::fromString(__DIR__ . '/Cv.css');
     }
 
     public function render(): string

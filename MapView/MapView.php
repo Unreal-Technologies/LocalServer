@@ -205,9 +205,9 @@ class MapView
      */
     public function __toString(): string
     {
-        $html = '<table>';
+        $html = '<table class="tableView">';
         $html .= '<tr>';
-        $html .= '<th></th>';
+        $html .= '<th class="cl ct"></th>';
         $html .= '<th>Render<br /><small>Click to Enlarge</small></th>';
         foreach ($this -> clients as $client) {
             $version = $client -> version();

@@ -1,0 +1,57 @@
+#cv td
+{
+    vertical-align: top;
+}
+
+#cv #personalia
+{
+    background-color: #406692;
+    padding: 15px;
+}
+
+#cv #personalia table
+{
+    width: 100%;
+}
+
+#cv #personalia table td:last-child
+{
+    text-align: right;
+}
+
+#cv #personalia a
+{
+    color: white;
+}
+
+#cv #personalia a:hover
+{
+    color: lightblue;
+}
+
+#cv #other
+{
+    background-color: white;
+    color: black;
+    padding: 15px;
+}
+
+#cv .header
+{
+    font-weight: bold;
+}
+
+#cv .wrapped
+{
+    width: 600px;
+}
+
+#cv img
+{
+    filter: drop-shadow(8px 8px 10px lightblue);
+}
+
+#cv #personalia b, #cv #other i
+{
+    color: #c0c0c0;
+}

@@ -33,13 +33,8 @@ class Mapviewer extends \UT_Php\Html\PageController
      */
     public function render(): string
     {
-        $s = microtime(true);
         $listing = new \MapView\MapView($this -> generatedWorlds, $this -> steamCommon, $this -> root());
         $stream = (string)$listing;
-        $e = microtime(true);
-        $dif = ($e - $s) * 1000;
-
-        $stream .= '<hr />' . number_format($dif, 0, ',', '.') . ' ms';
 
         return '<h1>Map Viewer</h1><hr />' . $stream;
     }
@@ -52,6 +47,6 @@ class Mapviewer extends \UT_Php\Html\PageController
     public function setup(string &$title, array &$css): void
     {
         $title = 'Map Viewer';
-        $css[] = \UT_Php\IO\File::fromString(__DIR__ . '/Mapviewer.css');
+        $css[] = \UT_Php\IO\File::fromString(__DIR__ . '/TableView.css');
     }
 }
