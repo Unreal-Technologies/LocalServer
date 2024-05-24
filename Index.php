@@ -1,8 +1,6 @@
 <?php
-require_once 'Tools/Work/UT_Php_Core+Interfaces.php';
-require_once 'Tools/Work/UT_Php_Core+IO.php';
-require_once 'Tools/Work/UT_Php_Core+Enums.php';
-require_once 'Tools/Work/UT_Php_Core+Routing.php';
+require_once 'PllLoader.php';
+PllLoader::initialize('UT.Php.Core:1.0.0.0');
 
 $root = \UT_Php_Core\IO\Directory::fromString(__DIR__);
 

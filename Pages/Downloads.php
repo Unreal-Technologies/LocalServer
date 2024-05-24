@@ -1,8 +1,6 @@
 <?php
 namespace Pages;
 
-require_once 'Tools/Work/UT_Php_Core+Html.php';
-
 class Downloads extends \UT_Php_Core\Html\PageController
 {
     /**

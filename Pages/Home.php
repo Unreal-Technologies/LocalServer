@@ -1,11 +1,6 @@
 <?php
 namespace Pages;
 
-require_once 'Tools/Work/UT_Php_Core+Html.php';
-require_once 'Tools/Work/UT_Php_Core+Collections.php';
-require_once 'Tools/Work/UT_Php_Core+Collections+Generic.php';
-
-
 class Home extends \UT_Php_Core\Html\PageController
 {
     private const SERVER_SEVENDAYSTODIE = '7 Days To Die';

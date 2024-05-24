@@ -1,12 +1,6 @@
 <?php
 namespace Pages;
 
-require_once 'Tools/Work/UT_Php_Core+Html.php';
-require_once 'Tools/Work/UT_Php_Core+Drawing.php';
-require_once 'Tools/Work/UT_Php_Core+IO+Common.php';
-require_once 'Tools/Work/UT_Php_Core+IO+Xml.php';
-require_once 'Tools/Work/UT_Php_Core+Collections.php';
-
 class Cv extends \UT_Php_Core\Html\PageController
 {
     /**

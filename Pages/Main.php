@@ -1,18 +1,6 @@
 <?php
 namespace Pages;
 
-require_once 'Tools/Work/UT_Php_Core+Html.php';
-require_once 'Tools/Work/UT_Php_Core.php';
-
-class Test
-{
-    function __construct()
-    {
-        $net = new \DOTNET('UT.Php, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c2d3f68af2cf2f79', 'UT.Php.Test');
-        echo $net -> add(1, 2);
-    }
-}
-
 class Main extends \UT_Php_Core\Html\PageController
 {
     /**
