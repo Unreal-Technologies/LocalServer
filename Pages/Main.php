@@ -2,6 +2,15 @@
 
 namespace Pages;
 
+class Test
+{
+    function __construct()
+    {
+        $net = new \DOTNET('UT.Php, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c2d3f68af2cf2f79', 'UT.Php.Test');
+        echo $net -> add(1, 2);
+    }
+}
+
 class Main extends \UT_Php\Html\PageController
 {
     /**
@@ -14,6 +23,7 @@ class Main extends \UT_Php\Html\PageController
      */
     public function initialize(): void
     {
+        //new Test();
         $this -> version = new \UT_Php\Version(
             1,
             0,
