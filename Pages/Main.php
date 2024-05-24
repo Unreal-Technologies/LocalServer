@@ -1,8 +1,7 @@
 <?php
-
 namespace Pages;
 
-class Main extends \UT_Php\Html\PageController
+class Main extends \UT_Php_Core\Html\PageController
 {
     /**
      * @var \UT_Php\Version
@@ -14,12 +13,12 @@ class Main extends \UT_Php\Html\PageController
      */
     public function initialize(): void
     {
-        $this -> version = new \UT_Php\Version(
+        //new Test();
+        $this -> version = new \UT_Php_Core\Version(
             1,
             0,
             0,
-            7,
-            ['UT.Php' => UT_PHP_VERSION]
+            7
         );
     }
 

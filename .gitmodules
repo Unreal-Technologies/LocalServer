@@ -1,3 +1,3 @@
-[submodule "UT.Php"]
-path = UT.Php
-url = https://github.com/Unreal-Technologies/UT.Php.git
+[submodule "PllLoader"]
+path = PllLoader
+url = https://github.com/Unreal-Technologies/PllLoader

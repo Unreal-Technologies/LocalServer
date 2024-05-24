@@ -1,11 +1,10 @@
 <?php
-
 namespace Pages;
 
-class Downloads extends \UT_Php\Html\PageController
+class Downloads extends \UT_Php_Core\Html\PageController
 {
     /**
-     * @var \UT_Php\Html\Directory
+     * @var \UT_Php_Core\Html\Directory
      */
     private $tree;
 
@@ -14,12 +13,12 @@ class Downloads extends \UT_Php\Html\PageController
      */
     public function initialize(): void
     {
-        $downloads = \UT_Php\IO\Directory::fromString("Content/Downloads");
+        $downloads = \UT_Php_Core\IO\Directory::fromString("Content/Downloads");
         if (!$downloads -> exists()) {
             $downloads -> create();
         }
 
-        $this -> tree = new \UT_Php\Html\Directory($downloads, $this -> root());
+        $this -> tree = new \UT_Php_Core\Html\Directory($downloads, $this -> root());
     }
 
     /**
@@ -32,7 +31,7 @@ class Downloads extends \UT_Php\Html\PageController
 
     /**
      * @param string $title
-     * @param \UT_Php\Interfaces\IFile[] $css
+     * @param \UT_Php_Core\Interfaces\IFile[] $css
      * @return void
      */
     public function setup(string &$title, array &$css): void

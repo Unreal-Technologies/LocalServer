@@ -57,12 +57,12 @@ class SevenDaysToDieApp
     }
 
     /**
-     * @param \UT_Php\IO\Directory $app
+     * @param \UT_Php_Core\IO\Directory $app
      */
-    public function __construct(\UT_Php\IO\Directory $app)
+    public function __construct(\UT_Php_Core\IO\Directory $app)
     {
         $this -> name_ = $app -> name();
-        $mapView = \UT_Php\IO\File::fromDirectory($app, 'MapView.Game.bin');
+        $mapView = \UT_Php_Core\IO\File::fromDirectory($app, 'MapView.Game.bin');
         $create = $mapView -> exists() ? false : true;
 
         if ($create) {
@@ -70,29 +70,29 @@ class SevenDaysToDieApp
                 return;
             }
 
-            $bepInEx = \UT_Php\IO\Directory::fromDirectory($app, 'BepInEx');
+            $bepInEx = \UT_Php_Core\IO\Directory::fromDirectory($app, 'BepInEx');
             $log = null;
 
             $checkAltLog = false;
             if ($bepInEx === null || !$bepInEx -> exists()) {
                 $checkAltLog = true;
             } else {
-                $log = \UT_Php\IO\File::fromDirectory($bepInEx, 'LogOutput.log');
+                $log = \UT_Php_Core\IO\File::fromDirectory($bepInEx, 'LogOutput.log');
                 if ($log === null) {
                     $checkAltLog = true;
                 }
             }
 
             if ($checkAltLog) {
-                $data = \UT_Php\IO\Directory::fromDirectory($app, '7DaysToDie_Data');
+                $data = \UT_Php_Core\IO\Directory::fromDirectory($app, '7DaysToDie_Data');
                 if ($data === null || !$data -> exists()) {
-                    $data = \UT_Php\IO\Directory::fromDirectory($app, '7DaysToDieServer_Data');
+                    $data = \UT_Php_Core\IO\Directory::fromDirectory($app, '7DaysToDieServer_Data');
                 }
 
                 $list = $data -> list('/^output\_log\_dedi/i');
 
                 if (count($list) == 0) {
-                    $localLow = \UT_Php\IO\Directory::fromString(
+                    $localLow = \UT_Php_Core\IO\Directory::fromString(
                         'C:\\Users\\Peter\\AppData\\LocalLow\\The Fun Pimps\\7 Days To Die'
                     );
                     $list = $localLow -> list('/^Player.log$/i');
@@ -117,10 +117,10 @@ class SevenDaysToDieApp
     }
 
     /**
-     * @param  \UT_Php\IO\File $file
+     * @param  \UT_Php_Core\IO\File $file
      * @return void
      */
-    private function loadMapView(\UT_Php\IO\File $file): void
+    private function loadMapView(\UT_Php_Core\IO\File $file): void
     {
         $data = (array)json_decode(gzuncompress(file_get_contents($file -> path())));
 
@@ -129,10 +129,10 @@ class SevenDaysToDieApp
     }
 
     /**
-     * @param  \UT_Php\IO\File $file
+     * @param  \UT_Php_Core\IO\File $file
      * @return void
      */
-    private function saveMapView(\UT_Php\IO\File $file): void
+    private function saveMapView(\UT_Php_Core\IO\File $file): void
     {
         $data = json_encode(
             [
@@ -146,21 +146,21 @@ class SevenDaysToDieApp
     }
 
     /**
-     * @param  \UT_Php\IO\Directory $app
+     * @param  \UT_Php_Core\IO\Directory $app
      * @return void
      */
-    private function getPrefabs(\UT_Php\IO\Directory $app): void
+    private function getPrefabs(\UT_Php_Core\IO\Directory $app): void
     {
-        $default = \UT_Php\IO\Directory::fromDirectory(\UT_Php\IO\Directory::fromDirectory($app, 'Data'), 'Prefabs');
-        $mods = \UT_Php\IO\Directory::fromDirectory($app, 'Mods');
+        $default = \UT_Php_Core\IO\Directory::fromDirectory(\UT_Php_Core\IO\Directory::fromDirectory($app, 'Data'), 'Prefabs');
+        $mods = \UT_Php_Core\IO\Directory::fromDirectory($app, 'Mods');
 
         $folders = [ $default ];
         foreach ($mods -> list() as $iDiskManager) {
-            if (!($iDiskManager instanceof \UT_Php\IO\Directory)) {
+            if (!($iDiskManager instanceof \UT_Php_Core\IO\Directory)) {
                 continue;
             }
 
-            $modPrefabs = \UT_Php\IO\Directory::fromDirectory($iDiskManager, 'Prefabs');
+            $modPrefabs = \UT_Php_Core\IO\Directory::fromDirectory($iDiskManager, 'Prefabs');
 
             if ($modPrefabs -> exists()) {
                 $folders[] = $modPrefabs;
@@ -177,22 +177,22 @@ class SevenDaysToDieApp
     }
 
     /**
-     * @param  \UT_Php\IO\Directory $dir
+     * @param  \UT_Php_Core\IO\Directory $dir
      * @return string[]
      */
-    private function getPrefabsListing(\UT_Php\IO\Directory $dir): array
+    private function getPrefabsListing(\UT_Php_Core\IO\Directory $dir): array
     {
         $buffer = [];
         foreach ($dir -> list() as $iDiskManager) {
-            if ($iDiskManager instanceof \UT_Php\IO\Directory) {
+            if ($iDiskManager instanceof \UT_Php_Core\IO\Directory) {
                 $list = $this -> getPrefabsListing($iDiskManager);
                 $buffer = array_merge($buffer, $list);
-            } elseif ($iDiskManager instanceof \UT_Php\IO\File && $iDiskManager -> extension() === 'tts') {
-                $prefab = \UT_Php\IO\File::fromDirectory(
+            } elseif ($iDiskManager instanceof \UT_Php_Core\IO\File && $iDiskManager -> extension() === 'tts') {
+                $prefab = \UT_Php_Core\IO\File::fromDirectory(
                     $iDiskManager -> parent(),
                     $iDiskManager -> basename() . '.xml'
                 );
-                $prefabXml = \UT_Php\IO\Xml\Document::createFromXml(file_get_contents($prefab -> path()));
+                $prefabXml = \UT_Php_Core\IO\Xml\Document::createFromXml(file_get_contents($prefab -> path()));
 
                 $hasSize = false;
                 foreach ($prefabXml -> search('/^property$/i') as $element) {
@@ -220,10 +220,10 @@ class SevenDaysToDieApp
     }
 
     /**
-     * @param  \UT_Php\IO\File $log
+     * @param  \UT_Php_Core\IO\File $log
      * @return void
      */
-    private function getVersion(\UT_Php\IO\File $log, bool $isAlternativeLog): void
+    private function getVersion(\UT_Php_Core\IO\File $log, bool $isAlternativeLog): void
     {
         $stream = file_get_contents($log -> path());
 

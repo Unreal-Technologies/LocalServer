@@ -75,7 +75,7 @@ class Cv
     private $experiences;
 
     /**
-     * @var \UT_Php\IO\File
+     * @var \UT_Php_Core\IO\File
      */
     private $photo;
 
@@ -90,19 +90,19 @@ class Cv
     private $gender;
 
     /**
-     * @param \UT_Php\IO\Common\Xml $file
+     * @param \UT_Php_Core\IO\Common\Xml $file
      * @param string $root
      */
-    public function __construct(\UT_Php\IO\Common\Xml $file, string $root)
+    public function __construct(\UT_Php_Core\IO\Common\Xml $file, string $root)
     {
-        $dtd = new \UT_Php\IO\Common\Dtd(__DIR__ . '\\Cv.dtd');
+        $dtd = new \UT_Php_Core\IO\Common\Dtd(__DIR__ . '\\Cv.dtd');
         $xml = $file -> document();
 
         if (!$xml -> validateDtd($dtd, $root)) {
             throw new \Exception('"' . $file -> path() . '" is an invalid XML Format');
         }
 
-        $this -> photo = \UT_Php\IO\File::fromString(
+        $this -> photo = \UT_Php_Core\IO\File::fromString(
             'Images/' . $xml -> search('/^photo$/i')[0] -> attributes()['value']
         );
         $this -> name = $xml -> search('/^name$/i')[0] -> attributes()['value'];
@@ -144,7 +144,7 @@ class Cv
      */
     private function asHtmlPersonalia(): string
     {
-        $root = \UT_Php\IO\Directory::fromString(__DIR__ . '/../');
+        $root = \UT_Php_Core\IO\Directory::fromString(__DIR__ . '/../');
 
         $buffer = [];
         $buffer[] = '<img src="' . $this -> photo -> relativeTo($root) . '" />';
@@ -286,14 +286,14 @@ class Cv
     }
 
     /**
-     * @param \UT_Php\IO\Xml\Element $educations
+     * @param \UT_Php_Core\IO\Xml\Element $educations
      * @return array
      */
-    private function getEducations(\UT_Php\IO\Xml\Element $educations): array
+    private function getEducations(\UT_Php_Core\IO\Xml\Element $educations): array
     {
         return
-            (new \UT_Php\Collections\Linq($educations -> children()))
-            -> select(function (\UT_Php\IO\Xml\Element $x) {
+            (new \UT_Php_Core\Collections\Linq($educations -> children()))
+            -> select(function (\UT_Php_Core\IO\Xml\Element $x) {
                 $attributes = $x -> attributes();
                 return [
                     'Start' => new \DateTime($attributes['start'] . '-01'),
@@ -306,19 +306,19 @@ class Cv
             })
             -> orderBy(function (array $x) {
                 return $x['Start'] -> format('Y-m-d');
-            }, \UT_Php\Enums\SortDirections::Asc)
+            }, \UT_Php_Core\Enums\SortDirections::Asc)
             -> toArray();
     }
 
     /**
-     * @param \UT_Php\IO\Xml\Element $experiences
+     * @param \UT_Php_Core\IO\Xml\Element $experiences
      * @return array
      */
-    private function getExperiences(\UT_Php\IO\Xml\Element $experiences): array
+    private function getExperiences(\UT_Php_Core\IO\Xml\Element $experiences): array
     {
         return
-            (new \UT_Php\Collections\Linq($experiences -> children()))
-            -> select(function (\UT_Php\IO\Xml\Element $x) {
+            (new \UT_Php_Core\Collections\Linq($experiences -> children()))
+            -> select(function (\UT_Php_Core\IO\Xml\Element $x) {
                 $attributes = $x -> attributes();
                 return [
                     'Start' => new \DateTime($attributes['start'] . '-01'),
@@ -332,19 +332,19 @@ class Cv
             })
             -> orderBy(function (array $x) {
                 return $x['Start'] -> format('Y-m-d');
-            }, \UT_Php\Enums\SortDirections::Asc)
+            }, \UT_Php_Core\Enums\SortDirections::Asc)
             -> toArray();
     }
 
     /**
-     * @param \UT_Php\IO\Xml\Element $languages
+     * @param \UT_Php_Core\IO\Xml\Element $languages
      * @return array
      */
-    private function getLanguages(\UT_Php\IO\Xml\Element $languages): array
+    private function getLanguages(\UT_Php_Core\IO\Xml\Element $languages): array
     {
         return
-            (new \UT_Php\Collections\Linq($languages -> children()))
-            -> select(function (\UT_Php\IO\Xml\Element $x) {
+            (new \UT_Php_Core\Collections\Linq($languages -> children()))
+            -> select(function (\UT_Php_Core\IO\Xml\Element $x) {
                 $attributes = $x -> attributes();
                 return [
                     'Name' => $attributes['name'],
@@ -353,19 +353,19 @@ class Cv
             })
             -> orderBy(function (array $x) {
                 return $x['Name'];
-            }, \UT_Php\Enums\SortDirections::Asc)
+            }, \UT_Php_Core\Enums\SortDirections::Asc)
             -> toArray();
     }
 
     /**
-     * @param \UT_Php\IO\Xml\Element $skills
+     * @param \UT_Php_Core\IO\Xml\Element $skills
      * @return array
      */
-    private function getSkill(\UT_Php\IO\Xml\Element $skills): array
+    private function getSkill(\UT_Php_Core\IO\Xml\Element $skills): array
     {
         return
-            (new \UT_Php\Collections\Linq($skills -> children()))
-            -> select(function (\UT_Php\IO\Xml\Element $x) {
+            (new \UT_Php_Core\Collections\Linq($skills -> children()))
+            -> select(function (\UT_Php_Core\IO\Xml\Element $x) {
                 $attributes = $x -> attributes();
                 return [
                     'Name' => $attributes['name'],
@@ -374,23 +374,23 @@ class Cv
             })
             -> orderBy(function (array $x) {
                 return $x['Name'];
-            }, \UT_Php\Enums\SortDirections::Asc)
+            }, \UT_Php_Core\Enums\SortDirections::Asc)
             -> toArray();
     }
 
     /**
-     * @param \UT_Php\IO\Xml\Element $driverslicences
+     * @param \UT_Php_Core\IO\Xml\Element $driverslicences
      * @return array
      */
-    private function getDriverslicence(\UT_Php\IO\Xml\Element $driverslicences): array
+    private function getDriverslicence(\UT_Php_Core\IO\Xml\Element $driverslicences): array
     {
         return
-            (new \UT_Php\Collections\Linq($driverslicences -> children()))
-            -> where(function (\UT_Php\IO\Xml\Element $x) {
+            (new \UT_Php_Core\Collections\Linq($driverslicences -> children()))
+            -> where(function (\UT_Php_Core\IO\Xml\Element $x) {
                 $attributes = $x -> attributes();
                 return isset($attributes['start']) && isset($attributes['end']);
             })
-            -> select(function (\UT_Php\IO\Xml\Element $x) {
+            -> select(function (\UT_Php_Core\IO\Xml\Element $x) {
                 $attributes = $x -> attributes();
                 return [
                     'ID' => strtoupper($x -> name()),
@@ -400,19 +400,19 @@ class Cv
             })
             -> orderBy(function (array $x) {
                 return $x['ID'];
-            }, \UT_Php\Enums\SortDirections::Asc)
+            }, \UT_Php_Core\Enums\SortDirections::Asc)
             -> toArray();
     }
 
     /**
-     * @param \UT_Php\IO\Xml\Element $address
+     * @param \UT_Php_Core\IO\Xml\Element $address
      * @return string[]
      */
-    private function getAddress(\UT_Php\IO\Xml\Element $address): array
+    private function getAddress(\UT_Php_Core\IO\Xml\Element $address): array
     {
         return
-            (new \UT_Php\Collections\Linq($address -> search('/^addressline/')))
-            -> select(function (\UT_Php\IO\Xml\Element $x) {
+            (new \UT_Php_Core\Collections\Linq($address -> search('/^addressline/')))
+            -> select(function (\UT_Php_Core\IO\Xml\Element $x) {
                 return $x -> text();
             })
             -> toArray();
