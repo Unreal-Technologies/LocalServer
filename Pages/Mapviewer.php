@@ -1,18 +1,19 @@
 <?php
-
 namespace Pages;
 
-class Mapviewer extends \UT_Php\Html\PageController
+require_once 'Tools/Work/UT_Php_Core+Html.php';
+
+class Mapviewer extends \UT_Php_Core\Html\PageController
 {
     /**
-     * @var \UT_Php\Interfaces\IDirectory
+     * @var \UT_Php_Core\IO\Directory
      */
-    private $generatedWorlds;
+    private \UT_Php_Core\IO\Directory $generatedWorlds;
 
     /**
-     * @var \UT_Php\Interfaces\IDirectory
+     * @var \UT_Php_Core\IO\Directory
      */
-    private $steamCommon;
+    private \UT_Php_Core\IO\Directory $steamCommon;
 
     /**
      * @return void
@@ -24,8 +25,8 @@ class Mapviewer extends \UT_Php\Html\PageController
         $ini = parse_ini_file('Content/Configuration/MapView.ini', true);
         ini_set('memory_limit', '2G');
 
-        $this -> generatedWorlds = \UT_Php\IO\Directory::fromString($ini['MapView']['GeneratedWorlds']);
-        $this -> steamCommon = \UT_Php\IO\Directory::fromString($ini['MapView']['SteamCommon']);
+        $this -> generatedWorlds = \UT_Php_Core\IO\Directory::fromString($ini['MapView']['GeneratedWorlds']);
+        $this -> steamCommon = \UT_Php_Core\IO\Directory::fromString($ini['MapView']['SteamCommon']);
     }
 
     /**
@@ -47,6 +48,6 @@ class Mapviewer extends \UT_Php\Html\PageController
     public function setup(string &$title, array &$css): void
     {
         $title = 'Map Viewer';
-        $css[] = \UT_Php\IO\File::fromString(__DIR__ . '/TableView.css');
+        $css[] = \UT_Php_Core\IO\File::fromString(__DIR__ . '/TableView.css');
     }
 }

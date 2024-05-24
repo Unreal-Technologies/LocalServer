@@ -1,8 +1,12 @@
 <?php
-
 namespace Pages;
 
-class Home extends \UT_Php\Html\PageController
+require_once 'Tools/Work/UT_Php_Core+Html.php';
+require_once 'Tools/Work/UT_Php_Core+Collections.php';
+require_once 'Tools/Work/UT_Php_Core+Collections+Generic.php';
+
+
+class Home extends \UT_Php_Core\Html\PageController
 {
     private const SERVER_SEVENDAYSTODIE = '7 Days To Die';
     private const SERVER_MINECRAFT = 'Minecraft';
@@ -21,20 +25,20 @@ class Home extends \UT_Php\Html\PageController
     /**
      * @var \UT_Php\IO\Memory
      */
-    private \UT_Php\IO\Memory $ram;
+    private \UT_Php_Core\IO\Memory $ram;
     /**
      * @return void
      */
     public function initialize(): void
     {
-        $processes = \UT_Php\IO\Process::list();
+        $processes = \UT_Php_Core\IO\Process::list();
         $serversInstances = [
             self::SERVER_SEVENDAYSTODIE => ['7daystodieserver.exe', '7daystodie.exe'],
             self::SERVER_MINECRAFT => ['javaw.exe', 'java.exe'],
             self::SERVER_PALWORLD => ['PalServer-Win64-Test-Cmd.exe']
         ];
 
-        $active = (new \UT_Php\Collections\Linq($processes))
+        $active = (new \UT_Php_Core\Collections\Linq($processes))
             -> toArray(function ($x) use ($serversInstances) {
                 foreach ($serversInstances as $v) {
                     if (in_array(strtolower($x -> name()), $v)) {
@@ -78,9 +82,9 @@ class Home extends \UT_Php\Html\PageController
         $this -> instances = $serversInstances;
         $this -> processes = $buffer;
 
-        $this -> ram = \UT_Php\IO\Memory::fromInt(
-            (new \UT_Php\Collections\Linq(\UT_Php\IO\Server::ram()))
-            -> select(function (\UT_Php\IO\Memory $x) {
+        $this -> ram = \UT_Php_Core\IO\Memory::fromInt(
+            (new \UT_Php_Core\Collections\Linq(\UT_Php_Core\IO\Server::ram()))
+            -> select(function (\UT_Php_Core\IO\Memory $x) {
                 return $x -> value();
             })
             -> sum(function (int $x) {
@@ -188,7 +192,7 @@ class Home extends \UT_Php\Html\PageController
     public function setup(string &$title, array &$css): void
     {
         $title = 'Home';
-        $css[] = \UT_Php\IO\File::fromString(__DIR__ . '/Home.css');
-        $css[] = \UT_Php\IO\File::fromString(__DIR__ . '/TableView.css');
+        $css[] = \UT_Php_Core\IO\File::fromString(__DIR__ . '/Home.css');
+        $css[] = \UT_Php_Core\IO\File::fromString(__DIR__ . '/TableView.css');
     }
 }

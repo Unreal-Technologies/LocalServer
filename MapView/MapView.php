@@ -20,24 +20,24 @@ class MapView
     private $comparison = [];
 
     /**
-     * @var \UT_Php\IO\Directory
+     * @var \UT_Php_Core\IO\Directory
      */
     private $root = [];
 
     /**
-     * @param \UT_Php\IO\Directory $generatedWorlds
-     * @param \UT_Php\IO\Directory $steamCommon
-     * @param \UT_Php\IO\Directory $root
+     * @param \UT_Php_Core\IO\Directory $generatedWorlds
+     * @param \UT_Php_Core\IO\Directory $steamCommon
+     * @param \UT_Php_Core\IO\Directory $root
      */
     public function __construct(
-        \UT_Php\IO\Directory $generatedWorlds,
-        \UT_Php\IO\Directory $steamCommon,
-        \UT_Php\IO\Directory $root
+        \UT_Php_Core\IO\Directory $generatedWorlds,
+        \UT_Php_Core\IO\Directory $steamCommon,
+        \UT_Php_Core\IO\Directory $root
     ) {
         $this -> root = $root;
         foreach ($generatedWorlds -> list() as $world) {
             if (
-                $world instanceof \UT_Php\IO\Directory &&
+                $world instanceof \UT_Php_Core\IO\Directory &&
                 $world -> contains('/^biomes.png$/i') &&
                 $world -> contains('/^map_info.xml$/i')
             ) {
@@ -46,7 +46,7 @@ class MapView
         }
         foreach ($steamCommon -> list() as $app) {
             if (
-                $app instanceof \UT_Php\IO\Directory &&
+                $app instanceof \UT_Php_Core\IO\Directory &&
                 (
                     $app -> contains('/^7DaysToDie.exe$/i') ||
                     $app -> contains('/^7DaysToDieServer.exe$/i')
@@ -78,12 +78,12 @@ class MapView
                 $buffer[$key] = $isCompatable;
 
                 if ($createRender && $isCompatable) {
-                    $image = \UT_Php\Drawing\Image::getImage($world -> biomes());
-                    $fc = \UT_Php\Drawing\Color::fromRGB(192, 192, 192);
-                    $bc = \UT_Php\Drawing\Color::fromRGB(0, 0, 0);
-                    $fcTrader = \UT_Php\Drawing\Color::fromRGB(0, 192, 0);
-                    $fcSettlement = \UT_Php\Drawing\Color::fromRGB(192, 0, 0);
-                    $wpc = \UT_Php\Drawing\Color::fromRGB(0, 0, 192);
+                    $image = \UT_Php_Core\Drawing\Image::getImage($world -> biomes());
+                    $fc = \UT_Php_Core\Drawing\Color::fromRGB(192, 192, 192);
+                    $bc = \UT_Php_Core\Drawing\Color::fromRGB(0, 0, 0);
+                    $fcTrader = \UT_Php_Core\Drawing\Color::fromRGB(0, 192, 0);
+                    $fcSettlement = \UT_Php_Core\Drawing\Color::fromRGB(192, 0, 0);
+                    $wpc = \UT_Php_Core\Drawing\Color::fromRGB(0, 0, 192);
 
                     if ($image -> gdOpen()) {
                         $half = $image -> size() -> x() / 2;
@@ -118,9 +118,9 @@ class MapView
                                 $hMap = $prefabGame['Z'] * 0.95;
 
 
-                                $location = new \UT_Php\Drawing\Point2D($xMap, $yMap);
-                                $size = new \UT_Php\Drawing\Point2D($wMap, $hMap);
-                                $rect = new \UT_Php\Drawing\Rectangle($size, $location, $rotation);
+                                $location = new \UT_Php_Core\Drawing\Point2D($xMap, $yMap);
+                                $size = new \UT_Php_Core\Drawing\Point2D($wMap, $hMap);
+                                $rect = new \UT_Php_Core\Drawing\Rectangle($size, $location, $rotation);
 
                                 $image -> gdDrawRectangle($rect, $foregroundColor, $borderColor);
                             }
@@ -132,9 +132,9 @@ class MapView
                             $xMap = $xGame === 0 ? $half : ($xGame < 0 ? $half - abs($xGame) : $half + $xGame);
                             $yMap = $zGame === 0 ? $half : ($zGame < 0 ? $half + abs($zGame) : $half - $zGame);
 
-                            $location = new \UT_Php\Drawing\Point2D($xMap, $yMap);
-                            $size = new \UT_Php\Drawing\Point2D(30, 30);
-                            $rect = new \UT_Php\Drawing\Rectangle($size, $location, 0);
+                            $location = new \UT_Php_Core\Drawing\Point2D($xMap, $yMap);
+                            $size = new \UT_Php_Core\Drawing\Point2D(30, 30);
+                            $rect = new \UT_Php_Core\Drawing\Rectangle($size, $location, 0);
 
                             $image -> gdDrawEllipse($rect, $wpc, $bc);
                         }
