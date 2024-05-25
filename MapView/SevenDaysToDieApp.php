@@ -151,7 +151,10 @@ class SevenDaysToDieApp
      */
     private function getPrefabs(\UT_Php_Core\IO\Directory $app): void
     {
-        $default = \UT_Php_Core\IO\Directory::fromDirectory(\UT_Php_Core\IO\Directory::fromDirectory($app, 'Data'), 'Prefabs');
+        $default = \UT_Php_Core\IO\Directory::fromDirectory(
+            \UT_Php_Core\IO\Directory::fromDirectory($app, 'Data'),
+            'Prefabs'
+        );
         $mods = \UT_Php_Core\IO\Directory::fromDirectory($app, 'Mods');
 
         $folders = [ $default ];

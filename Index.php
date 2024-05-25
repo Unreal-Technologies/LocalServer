@@ -1,6 +1,15 @@
 <?php
-require_once 'PllLoader/PllLoader.php';
-PllLoader::initialize('UT.Php.Core:1.0.0.0');
+
+require_once 'Data/Pll/Loader.php';
+
+try {
+    $coreVersion = \Pll\Loader::initialize('UT.Php.Core');
+} catch (\Exception $ex) {
+    $coreVersion = \Pll\Loader::packageDevelop(__DIR__ . '/../Compiler/UT.Php.Core');
+}
+
+require_once 'Data/Constants.php';
+UT_PHP_CORE_VERSION -> update($coreVersion);
 
 $root = \UT_Php_Core\IO\Directory::fromString(__DIR__);
 
@@ -15,7 +24,7 @@ foreach (\UT_Php_Core\IO\Directory::fromString('Pages') -> list() as $iDiskManag
         $class = '\\' . str_replace('/', '\\', str_replace('.' . $iDiskManager -> extension(), '', $relative));
 
         $router -> add(
-                \UT_Php_Core\Enums\RequestMethods::Get,
+            \UT_Php_Core\Enums\RequestMethods::Get,
             '/' . $iDiskManager -> basename(),
             function () use ($router, $class, $relative) {
                 require_once $relative;

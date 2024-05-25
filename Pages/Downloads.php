@@ -1,4 +1,5 @@
 <?php
+
 namespace Pages;
 
 class Downloads extends \UT_Php_Core\Html\PageController
