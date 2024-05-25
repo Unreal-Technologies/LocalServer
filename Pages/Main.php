@@ -1,25 +1,14 @@
 <?php
+
 namespace Pages;
 
 class Main extends \UT_Php_Core\Html\PageController
 {
     /**
-     * @var \UT_Php\Version
-     */
-    private $version;
-
-    /**
      * @return void
      */
     public function initialize(): void
     {
-        //new Test();
-        $this -> version = new \UT_Php_Core\Version(
-            1,
-            0,
-            0,
-            7
-        );
     }
 
     /**
@@ -40,7 +29,7 @@ class Main extends \UT_Php_Core\Html\PageController
         $html .= '</span>';
         $html .= '<span id="version">';
         $html .= '<a href="https://github.com/Unreal-Technologies" target="_blank">Version ' .
-            $this -> version .
+            APP_VERSION .
             '</a>';
         $html .= '</span>';
         return $html;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Pages;
 
 class Home extends \UT_Php_Core\Html\PageController

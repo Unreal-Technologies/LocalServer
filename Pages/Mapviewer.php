@@ -1,4 +1,5 @@
 <?php
+
 namespace Pages;
 
 class Mapviewer extends \UT_Php_Core\Html\PageController
