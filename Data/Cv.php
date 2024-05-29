@@ -90,10 +90,10 @@ class Cv
     private $gender;
 
     /**
-     * @param \UT_Php_Core\IO\Common\Xml $file
+     * @param \UT_Php_Core\IO\Common\IXmlFile $file
      * @param string $root
      */
-    public function __construct(\UT_Php_Core\IO\Common\Xml $file, string $root)
+    public function __construct(\UT_Php_Core\IO\Common\IXmlFile $file, string $root)
     {
         $dtd = new \UT_Php_Core\IO\Common\Dtd(__DIR__ . '\\Cv.dtd');
         $xml = $file -> document();
@@ -306,7 +306,7 @@ class Cv
             })
             -> orderBy(function (array $x) {
                 return $x['Start'] -> format('Y-m-d');
-            }, \UT_Php_Core\Enums\SortDirections::Asc)
+            }, \UT_Php_Core\Collections\SortDirections::Asc)
             -> toArray();
     }
 
@@ -332,7 +332,7 @@ class Cv
             })
             -> orderBy(function (array $x) {
                 return $x['Start'] -> format('Y-m-d');
-            }, \UT_Php_Core\Enums\SortDirections::Asc)
+            }, \UT_Php_Core\Collections\SortDirections::Asc)
             -> toArray();
     }
 
@@ -353,7 +353,7 @@ class Cv
             })
             -> orderBy(function (array $x) {
                 return $x['Name'];
-            }, \UT_Php_Core\Enums\SortDirections::Asc)
+            }, \UT_Php_Core\Collections\SortDirections::Asc)
             -> toArray();
     }
 
@@ -374,7 +374,7 @@ class Cv
             })
             -> orderBy(function (array $x) {
                 return $x['Name'];
-            }, \UT_Php_Core\Enums\SortDirections::Asc)
+            }, \UT_Php_Core\Collections\SortDirections::Asc)
             -> toArray();
     }
 
@@ -400,7 +400,7 @@ class Cv
             })
             -> orderBy(function (array $x) {
                 return $x['ID'];
-            }, \UT_Php_Core\Enums\SortDirections::Asc)
+            }, \UT_Php_Core\Collections\SortDirections::Asc)
             -> toArray();
     }
 
